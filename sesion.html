@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Viajes - Autenticación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-card">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <div class="logo-circle">
+                    <div class="logo-content">
+                       <img style="border-radius: 100%;" src="vuelos/imagenes/logo-con-letra-ini.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-btn" id="loginTab">INICIO DE SESIÓN</button>
+                <button class="tab-btn active" id="registerTab">REGISTRO</button>
+            </div>
+
+            <!-- Forms Container -->
+            <div class="forms-container">
+                <!-- Login Form -->
+                <div class="form-section" id="loginForm">
+                    <h2 class="form-title">Inicio De Sesión</h2>
+                    <form class="auth-form">
+                        <div class="input-group">
+                            <label for="loginEmail">Gmail</label>
+                            <input type="email" id="loginEmail" name="email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="loginPassword">Contraseña</label>
+                            <input type="password" id="loginPassword" name="password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Ingresar</button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div class="form-section active" id="registerForm">
+                    <h2 class="form-title">Registro</h2>
+                    <form class="auth-form">
+                        <div class="input-group">
+                            <label for="fullName">Nombre Completo</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="registerEmail">E-MAIL</label>
+                            <input type="email" id="registerEmail" name="email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="registerPassword">Contraseña</label>
+                            <input type="password" id="registerPassword" name="password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
