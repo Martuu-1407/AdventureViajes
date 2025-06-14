@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="vuelos.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -95,11 +94,90 @@
             </div>
         </div>
     </header> 
-                 
-            
-            <main>
+                     
+        <main>
+            <section>
+                <section class="buscador">
+                    <div class="buscador-fondo"></div>
+                        <div class="buscador-container">
+                            <div class="search-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Origen</label>
+                                        <div class="inputs">
+                                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            <input type="text" placeholder="Ingresa ciudad, país o región" id="origin">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Destino</label>
+                                        <div class="inputs">
+                                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            <input type="text" placeholder="Ingresa hacia dónde te gustaría dirigirte" id="destination">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ida</label>
+                                        <div class="inputs">
+                                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            <input type="date" id="departure">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Vuelta</label>
+                                        <div class="inputs">
+                                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            <input type="date" id="return">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pasajeros, clase</label>
+                                        <div class="inputs">
+                                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" stroke-width="2"/>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            <select id="pasajeros">
+                                                <option>1 Pasajero, Eco</option>
+                                                <option>2 Pasajeros, Eco</option>
+                                                <option>3 Pasajeros, Eco</option>
+                                                <option>1 Pasajero, Premium</option>
+                                                <option>2 Pasajeros, Premium</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="buscar-btn">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+            </section>
+            <section class=""> 
 
-            </main>
+                
+            </section>
+            
+        </main>
 
              <footer>
         <div class="footer-container">
@@ -132,8 +210,7 @@
                 <p>Copyright © 2025 AdventureViajes. Todos los derechos reservados.</p>
             </div>
         </div>
-    </footer>
-            
-    
+    </footer>    
+    <script src="vuelos.js"></script>
 </body>
 </html>
