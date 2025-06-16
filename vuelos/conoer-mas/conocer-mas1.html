@@ -126,8 +126,101 @@
                         <h2>Los mejores precios encontrados</h2>
                         <p>Variación de precios en los últimos meses</p>
                     </div>
-                    <div class="cuadro">
-                        <canvas id="precio-cuadro" width="600" height="300"></canvas>
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <div class="chart-y-axis">
+                                <div class="y-label">$500K</div>
+                                <div class="y-label">$440K</div>
+                                <div class="y-label">$380K</div>
+                                <div class="y-label">$320K</div>
+                                <div class="y-label">$260K</div>
+                                <div class="y-label">$200K</div>
+                            </div>
+                            <div class="chart-area">
+                                <div class="chart-grid">
+                                    <div class="grid-line"></div>
+                                    <div class="grid-line"></div>
+                                    <div class="grid-line"></div>
+                                    <div class="grid-line"></div>
+                                    <div class="grid-line"></div>
+                                    <div class="grid-line"></div>
+                                </div>
+                                <div class="chart-bars">
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 45%;" data-value="$270K"></div>
+                                        </div>
+                                        <div class="month-label">ENE</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 55%;" data-value="$320K"></div>
+                                        </div>
+                                        <div class="month-label">FEB</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 65%;" data-value="$350K"></div>
+                                        </div>
+                                        <div class="month-label">MAR</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 50%;" data-value="$290K"></div>
+                                        </div>
+                                        <div class="month-label">ABR</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar best-bar" style="height: 35%;" data-value="$250K"></div>
+                                        </div>
+                                        <div class="month-label">MAY</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 42%;" data-value="$260K"></div>
+                                        </div>
+                                        <div class="month-label">JUN</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 75%;" data-value="$380K"></div>
+                                        </div>
+                                        <div class="month-label">JUL</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 85%;" data-value="$420K"></div>
+                                        </div>
+                                        <div class="month-label">AGO</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 62%;" data-value="$330K"></div>
+                                        </div>
+                                        <div class="month-label">SEP</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 58%;" data-value="$310K"></div>
+                                        </div>
+                                        <div class="month-label">OCT</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 48%;" data-value="$280K"></div>
+                                        </div>
+                                        <div class="month-label">NOV</div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <div class="bar-container">
+                                            <div class="bar avg-bar" style="height: 68%;" data-value="$360K"></div>
+                                        </div>
+                                        <div class="month-label">DIC</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="cuadro-txt">
                         <div class="item-txt">
@@ -174,6 +267,138 @@
             </div>
         </div>
     </section>
+
+    <section class="flight-options">
+        <div class="container">
+            <div class="section-header">
+                <h2>Opciones de vuelo disponibles</h2>
+                <div class="filter-options">
+                    <button class="filter-btn active" onclick="filterFlights('all')">Todos</button>
+                    <button class="filter-btn" onclick="filterFlights('direct')">Directos</button>
+                    <button class="filter-btn" onclick="filterFlights('stops')">Con escalas</button>
+                </div>
+            </div>
+            
+            <div class="flights-list">
+                <div class="flight-card" data-type="stops">
+                    <div class="flight-info">
+                        <div class="airline-info">
+                            <div class="airline-logo">
+                                <svg width="40" height="40" viewBox="0 0 192.756 192.756">
+                                    <path fill="#344572" d="M174.393.007h13.805s8.225-.445 13.426 5.826l30.143 37.995h-21.152s-9.373.41-13.17-5.953z"/>
+                                </svg>
+                            </div>
+                            <div class="airline-name">Aerolíneas Argentinas</div>
+                        </div>
+                        <div class="flight-details">
+                            <div class="flight-time">
+                                <div class="departure">
+                                    <span class="time">08:45</span>
+                                    <span class="airport">EZE</span>
+                                </div>
+                                <div class="flight-duration">
+                                    <div class="duration-line">
+                                        <div class="duration-dot"></div>
+                                        <div class="duration-path"></div>
+                                        <div class="duration-dot"></div>
+                                    </div>
+                                    <span class="duration-text">12h 30m</span>
+                                    <span class="stops">1 escala</span>
+                                </div>
+                                <div class="arrival">
+                                    <span class="time">23:15</span>
+                                    <span class="airport">MAD</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-price">
+                            <div class="price-amount">$1.044.962</div>
+                            <div class="price-per-person">por persona</div>
+                            <button class="select-flight-btn">Seleccionar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flight-card" data-type="direct">
+                    <div class="flight-info">
+                        <div class="airline-info">
+                            <div class="airline-logo">
+                                <svg width="40" height="40" viewBox="0 0 2499.8 581.1">
+                                    <path fill="#2a0088" d="M221.885 78.276l12.412 20.517s4.562 10.385 19.633 10.385h31.66l-44.834-54.206-18.871 4.308c0-.001-5.191 6.838 0 18.996z"/>
+                                </svg>
+                            </div>
+                            <div class="airline-name">LATAM</div>
+                        </div>
+                        <div class="flight-details">
+                            <div class="flight-time">
+                                <div class="departure">
+                                    <span class="time">14:20</span>
+                                    <span class="airport">EZE</span>
+                                </div>
+                                <div class="flight-duration">
+                                    <div class="duration-line">
+                                        <div class="duration-dot"></div>
+                                        <div class="duration-path direct"></div>
+                                        <div class="duration-dot"></div>
+                                    </div>
+                                    <span class="duration-text">11h 45m</span>
+                                    <span class="stops direct">Directo</span>
+                                </div>
+                                <div class="arrival">
+                                    <span class="time">04:05</span>
+                                    <span class="airport">MAD</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-price">
+                            <div class="price-amount">$1.189.750</div>
+                            <div class="price-per-person">por persona</div>
+                            <button class="select-flight-btn">Seleccionar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flight-card" data-type="stops">
+                    <div class="flight-info">
+                        <div class="airline-info">
+                            <div class="airline-logo">
+                                <svg width="40" height="40" viewBox="0 0 302.1115902939018 142.2640366546909">
+                                    <path fill="#19aade" d="M174.393.007h13.805s8.225-.445 13.426 5.826l30.143 37.995h-21.152s-9.373.41-13.17-5.953z"/>
+                                </svg>
+                            </div>
+                            <div class="airline-name">American Airlines</div>
+                        </div>
+                        <div class="flight-details">
+                            <div class="flight-time">
+                                <div class="departure">
+                                    <span class="time">11:30</span>
+                                    <span class="airport">EZE</span>
+                                </div>
+                                <div class="flight-duration">
+                                    <div class="duration-line">
+                                        <div class="duration-dot"></div>
+                                        <div class="duration-path"></div>
+                                        <div class="duration-dot"></div>
+                                    </div>
+                                    <span class="duration-text">14h 20m</span>
+                                    <span class="stops">2 escalas</span>
+                                </div>
+                                <div class="arrival">
+                                    <span class="time">03:50</span>
+                                    <span class="airport">MAD</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-price">
+                            <div class="price-amount">$967.500</div>
+                            <div class="price-per-person">por persona</div>
+                            <button class="select-flight-btn">Seleccionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
             
             
         </main>
@@ -210,6 +435,6 @@
             </div>
         </div>
     </footer>    
-    <script src="../conoer-mas/conocer-mas1.js"></script>
+    <script src="conocer-mas1.js"></script>
 </body>
 </html>
