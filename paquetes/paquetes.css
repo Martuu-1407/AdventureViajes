@@ -707,6 +707,12 @@ footer {
   margin-bottom: 15px;
 }
 
+.nuestrosPaquetes__h2 {
+  text-align: center;
+  color: var(--gris);
+  margin-bottom: 40px;
+}
+
 /* Tablets y compu(768px - 1024px) */
 @media (max-width: 1024px) {
   .header-content {
