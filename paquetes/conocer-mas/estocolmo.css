@@ -19,6 +19,8 @@
 
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 .foto {
@@ -69,9 +71,20 @@
 
 .linea {
   background-color: var(--gris);
-  opacity: 20%;
+  opacity: 10%;
   height: 5px;
   margin-top: 62px;
+}
+
+.lineaVert {
+  background-color: var(--gris);
+  opacity: 20%;
+  width: 5px;
+  height: 200px;
+  display: flex;
+  margin-left: 595px;
+  border-radius: 50px;
+  opacity: 10%;
 }
 
 .precios {
@@ -81,4 +94,48 @@
 .pPersona {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.formasPago {
+  margin-top: 15px;
+}
+
+.forma {
+  display: flex;
+  align-items: center;
+}
+
+.forma p {
+  margin-left: 10px;
+}
+
+.izquierda h2 {
+  text-align: center;
+}
+
+.infoContainer,
+.incluye {
+  margin-left: 15px;
+}
+
+.resp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.resp p {
+  margin-top: 2px;
+}
+
+.incluye h3 {
+  text-align: center;
+  margin-top: 20px;
 }
