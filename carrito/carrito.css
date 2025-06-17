@@ -1,0 +1,134 @@
+:root {
+  --header-color: #fcf4f4;
+  --txtylinks: #00b2ff;
+  --amarillo: #deb841;
+  --hover-amarillo: #ffebb0;
+  --rojo: #ef4545;
+  --rojo-hover: #960a0a;
+  --gris: #7c7c7c;
+  --txt: #000000;
+  --fondos: #eee5e9;
+}
+
+h1 {
+  text-align: center;
+}
+
+.pedido {
+  background-color: var(--fondos);
+  padding: 20px;
+  margin: 10px auto auto auto;
+  width: 60%;
+  align-items: center;
+  border-radius: 10px;
+
+  display: flex;
+}
+
+.pedido h3 {
+  margin-left: 20px;
+}
+
+.linea {
+  background-color: var(--gris);
+  width: 2px;
+  height: 100%;
+}
+.vertical-line {
+  border: none;
+  border-left: 2px solid #999;
+  height: 40px;
+  margin: 0 20px;
+}
+
+.pedido img:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.abajo {
+  display: flex;
+}
+
+.cupones {
+  margin-left: 220px;
+  margin-top: 20px;
+  width: 500px;
+  text-align: center;
+}
+
+.incluir {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.ingresar {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.ingresar input {
+  width: 200px;
+  padding: 10px;
+  background-color: var(--amarillo);
+  border: 1px solid black;
+  border-radius: 20px;
+  color: white;
+  margin-right: 10px;
+}
+
+.ingresar input::placeholder {
+  color: var(--txt);
+}
+.agregado {
+  display: flex;
+  margin-left: 100px;
+  margin-top: 10px;
+}
+
+.agregado p {
+  margin-left: 10px;
+  color: var(--txt);
+}
+
+.aplicar,
+.finalizar {
+  background-color: var(--rojo);
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+}
+
+.aplicar:hover,
+.finalizar:hover {
+  background-color: var(--rojo-hover);
+  cursor: pointer;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.total {
+  background-color: var(--fondos);
+  margin-top: 20px;
+  padding: 20px;
+  width: 400px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.total-pedido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lineaHor {
+  border: none;
+  border-top: 2px solid #999;
+  width: 100%;
+  margin: 20px 0;
+}
