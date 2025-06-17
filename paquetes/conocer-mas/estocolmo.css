@@ -1,0 +1,141 @@
+:root {
+  --header-color: #fcf4f4;
+  --txtylinks: #00b2ff;
+  --amarillo: #deb841;
+  --hover-amarillo: #ffebb0;
+  --rojo: #ef4545;
+  --rojo-hover: #960a0a;
+  --gris: #7c7c7c;
+  --txt: #000000;
+}
+
+.containerConocer {
+  background-color: var(--header-color);
+  border-radius: 30px;
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.foto {
+  width: 600px;
+  height: 250px;
+  border-radius: 30px 0px 0px 0px;
+}
+
+.derecha h2 {
+  text-align: center;
+}
+.derecha {
+  padding: 20px;
+}
+
+.fecha {
+  display: flex;
+  align-items: center;
+  background-color: var(--amarillo);
+  width: 280px;
+  padding: 5px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  margin-top: 35px;
+}
+
+.fecha .icono {
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.pasajeros {
+  display: flex;
+  align-items: center;
+  background-color: var(--amarillo);
+  width: 280px;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.pasajeros .icono {
+  margin-left: 5px;
+  margin-right: 10px;
+}
+.pasajeros p {
+  margin-left: 20px;
+}
+
+.linea {
+  background-color: var(--gris);
+  opacity: 10%;
+  height: 5px;
+  margin-top: 62px;
+}
+
+.lineaVert {
+  background-color: var(--gris);
+  opacity: 20%;
+  width: 5px;
+  height: 200px;
+  display: flex;
+  margin-left: 595px;
+  border-radius: 50px;
+  opacity: 10%;
+}
+
+.precios {
+  margin-top: 20px;
+}
+
+.pPersona {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.formasPago {
+  margin-top: 15px;
+}
+
+.forma {
+  display: flex;
+  align-items: center;
+}
+
+.forma p {
+  margin-left: 10px;
+}
+
+.izquierda h2 {
+  text-align: center;
+}
+
+.infoContainer,
+.incluye {
+  margin-left: 15px;
+}
+
+.resp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.resp p {
+  margin-top: 2px;
+}
+
+.incluye h3 {
+  text-align: center;
+  margin-top: 20px;
+}
