@@ -103,6 +103,41 @@ const server = http.createServer((req, res) => {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ nombre }));
     });
+  } else if (req.method === "POST" && req.url === "/guardar-vuelo") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+    req.on("end", () => {
+      const datos = JSON.parse(body);
+
+      const sql = `INSERT INTO vuelos (origen, destino, fecha, precio)
+                 VALUES (?, ?, ?, ?)`;
+      const valores = [datos.origen, datos.destino, datos.fecha, datos.precio];
+
+      conexion.query(sql, valores, (err) => {
+        if (err) {
+          console.error("Error al guardar vuelo:", err);
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end("Error al guardar");
+        } else {
+          res.writeHead(200, { "Content-Type": "text/plain" });
+          res.end("Vuelo guardado");
+        }
+      });
+    });
+  } else if (req.method === "GET" && req.url === "/obtener-vuelos") {
+    const sql = "SELECT * FROM vuelos";
+    conexion.query(sql, (err, resultados) => {
+      if (err) {
+        console.error("Error al obtener vuelos:", err);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "Error al obtener vuelos" }));
+      } else {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(resultados));
+      }
+    });
   } else {
     // Servir archivos estáticos para GET y otras solicitudes
     let filePath = path.join(
