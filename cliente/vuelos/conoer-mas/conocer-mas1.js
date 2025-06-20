@@ -7,7 +7,7 @@ const priceData = {
 
 // Función para formatear precios
 function formatPrice(price) {
-    return '$' + (price / 1000) + 'K';
+  return '$' + (price / 1000).toFixed(1) + 'K';
 }
 
 // Función para animar las barras al cargar la página

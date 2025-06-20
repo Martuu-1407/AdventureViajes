@@ -777,7 +777,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    height: 112%;
+    height: 110%;
     padding: 0px 0 -10px 0;
     gap: 8px;
 }
@@ -813,13 +813,10 @@ footer {
     background-color: var(--txtylinks);
 }
 
-.max-bar {
-    background-color: var(--rojo-hover);
+.best-bar {
+    background-color: var(--rojo);
 }
 
-.best-bar {
-    background-color: var(--mejor);
-}
 .bar:hover {
     background-color: var(--amarillo);
     transform: translateY(-4px);
