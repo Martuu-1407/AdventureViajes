@@ -61,22 +61,48 @@ const server = http.createServer((req, res) => {
           console.error("Error al buscar usuario:", err);
           res.writeHead(500, { "Content-Type": "text/plain" });
           res.end("Error interno del servidor");
-          return; // <--- Asegurate de retornar para no seguir ejecutando
+          return;
         }
         if (resultados.length > 0) {
           console.log("Inicio de sesión exitoso para:", email);
-          res.writeHead(200, { "Content-Type": "text/plain" });
-          res.end("ok");
-          return; // <--- Importante
+          // 🔴 Guardamos el email como cookie y redirigimos
+          res.writeHead(302, {
+            "Set-Cookie": `usuario_email=${email}; HttpOnly`,
+            Location: "/ini-reg/sesion.html",
+          });
+          res.end();
+          return;
         } else {
           console.log("Credenciales inválidas");
           res.writeHead(401, { "Content-Type": "text/plain" });
           res.end("Credenciales incorrectas");
-          return; // <--- Importante
+          return;
         }
       });
     });
     return; // <--- También retorna aquí para que no siga a servir archivos estáticos
+  } else if (req.method === "GET" && req.url === "/obtener-nombre") {
+    const cookie = req.headers.cookie;
+    const email = cookie?.split("usuario_email=")[1]?.split(";")[0];
+
+    if (!email) {
+      res.writeHead(401, { "Content-Type": "text/plain" });
+      res.end("No autorizado");
+      return;
+    }
+
+    const sql = "SELECT nombre FROM usuarios WHERE email = ?";
+    conexion.query(sql, [email], (err, resultados) => {
+      if (err || resultados.length === 0) {
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("Usuario no encontrado");
+        return;
+      }
+
+      const nombre = resultados[0].nombre;
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ nombre }));
+    });
   } else {
     // Servir archivos estáticos para GET y otras solicitudes
     let filePath = path.join(

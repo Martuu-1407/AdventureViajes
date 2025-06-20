@@ -1,5 +1,3 @@
-// auth.js
-
 // Registro
 const formRegistro = document.querySelector("#registro");
 if (formRegistro) {
