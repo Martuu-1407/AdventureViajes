@@ -101,7 +101,47 @@
                 </a>
                 </nav>
                 <div class="compu-user">
-                            <div class="moneda">AR$</div>
+                            <!-- Menú desplegable de monedas -->
+                    <div class="currency-dropdown" id="currencyDropdown">
+                        <button class="currency-btn" id="currencyBtn">
+                            <span class="currency-flag" id="currentFlag">🇦🇷</span>
+                            <span class="currency-code" id="currentCode">AR$</span>
+                            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="currency-menu" id="currencyMenu">
+                            <div class="currency-option" data-code="AR$" data-flag="🇦🇷" data-name="Peso Argentino">
+                                <img class="img-banderas" src="../imagenes/argentina-flag-icon.png" alt="arg">
+                                <div class="currency-info">
+                                    <span class="currency-code">AR$</span>
+                                    <span class="currency-name">Peso Argentino</span>
+                                </div>
+                            </div>
+                            <div class="currency-option" data-code="USD" data-flag="🇺🇸" data-name="Estados Unidos">
+                                <img class="img-banderas" src="../imagenes/estados-unidos.png" alt="eu">
+                                <div class="currency-info">
+                                    <span class="currency-code">USD</span>
+                                    <span class="currency-name">Estados Unidos</span>
+                                </div>
+                            </div>
+                            <div class="currency-option" data-code="R$" data-flag="🇧🇷" data-name="Reales">
+                               <img class="img-banderas" src="../imagenes/brazil-flag-icon.png" alt="br">
+                                <div class="currency-info">
+                                    <span class="currency-code">R$</span>
+                                    <span class="currency-name">Reales</span>
+                                </div>
+                            </div>
+                            <div class="currency-option" data-code="EU" data-flag="🇪🇺" data-name="Euros">
+                                <img class="img-banderas" src="../imagenes/espana.png" alt="esp">
+                                <div class="currency-info">
+                                    <span class="currency-code">EU</span>
+                                    <span class="currency-name">Euros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                                 <div class="user-item">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
@@ -364,6 +404,6 @@
             </div>
         </div>
     </footer>    
-    <script src="autos/alquiler.js"></script>
+    <script src="../autos/alquiler.js"></script>
 </body>
 </html>

@@ -2,11 +2,11 @@
 class TravelCarousel {
   constructor() {
     // Elementos del DOM que necesitamos:
-    this.track = document.getElementById("carouselTrack"); // El contenedor de las diapositivas
-    this.indicators = document.querySelectorAll(".indicator"); // Los puntos indicadores
+    this.track = document.getElementById('carouselTrack'); // El contenedor de las diapositivas
+    this.indicators = document.querySelectorAll('.indicator'); // Los puntos indicadores
     this.currentSlide = 0; // La diapositiva actual (comienza en 0)
-    this.totalSlides = document.querySelectorAll(".carousel-slide").length; // Número total de diapositivas
-
+    this.totalSlides = document.querySelectorAll('.carousel-slide').length; // Número total de diapositivas
+    
     // Inicializar el carrusel
     this.init();
   }
@@ -15,29 +15,29 @@ class TravelCarousel {
   init() {
     // 1. Configurar los eventos para los indicadores (puntos)
     this.indicators.forEach((indicator, index) => {
-      indicator.addEventListener("click", () => {
+      indicator.addEventListener('click', () => {
         this.goToSlide(index); // Al hacer clic en un punto, ir a esa diapositiva
       });
     });
 
     // 2. Iniciar el cambio automático de diapositivas
     this.startAutoPlay();
-
+    
     // 3. Pausar el cambio automático cuando el mouse está sobre el carrusel
-    const container = document.querySelector(".carousel-container");
-    container.addEventListener("mouseenter", () => this.stopAutoPlay());
-    container.addEventListener("mouseleave", () => this.startAutoPlay());
+    const container = document.querySelector('.carousel-container');
+    container.addEventListener('mouseenter', () => this.stopAutoPlay());
+    container.addEventListener('mouseleave', () => this.startAutoPlay());
   }
 
   // Método para ir a una diapositiva específica
   goToSlide(slideIndex) {
     // Actualizar la diapositiva actual
     this.currentSlide = slideIndex;
-
+    
     // Mover el carrusel usando transformación CSS
     const translateX = -slideIndex * 100; // Calcula el porcentaje de desplazamiento
     this.track.style.transform = `translateX(${translateX}%)`;
-
+    
     // Actualizar los indicadores para mostrar cuál está activo
     this.updateIndicators();
   }
@@ -46,7 +46,7 @@ class TravelCarousel {
   updateIndicators() {
     this.indicators.forEach((indicator, index) => {
       // Añade la clase 'active' al indicador correspondiente a la diapositiva actual
-      indicator.classList.toggle("active", index === this.currentSlide);
+      indicator.classList.toggle('active', index === this.currentSlide);
     });
   }
 
@@ -73,7 +73,96 @@ class TravelCarousel {
   }
 }
 
-// Inicializar el carrusel cuando el documento HTML esté completamente cargado
-document.addEventListener("DOMContentLoaded", () => {
+// Clase para manejar el menú desplegable de monedas
+class CurrencyDropdown {
+  constructor() {
+    this.dropdown = document.getElementById('currencyDropdown');
+    this.btn = document.getElementById('currencyBtn');
+    this.menu = document.getElementById('currencyMenu');
+    this.currentFlag = document.getElementById('currentFlag');
+    this.currentCode = document.getElementById('currentCode');
+    this.options = document.querySelectorAll('.currency-option');
+    
+    this.init();
+  }
+
+  init() {
+    // Evento para abrir/cerrar el menú
+    this.btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.toggleMenu();
+    });
+
+    // Eventos para seleccionar moneda
+    this.options.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.selectCurrency(option);
+      });
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!this.dropdown.contains(e.target)) {
+        this.closeMenu();
+      }
+    });
+
+    // Cerrar menú con tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeMenu();
+      }
+    });
+  }
+
+  toggleMenu() {
+    if (this.dropdown.classList.contains('open')) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
+  }
+
+  openMenu() {
+    this.dropdown.classList.add('open');
+  }
+
+  closeMenu() {
+    this.dropdown.classList.remove('open');
+  }
+
+  selectCurrency(option) {
+    const flag = option.dataset.flag;
+    const code = option.dataset.code;
+    
+    // Actualizar la visualización del botón
+    this.currentFlag.textContent = flag;
+    this.currentCode.textContent = code;
+    
+    // Actualizar las clases de selección
+    this.options.forEach(opt => opt.classList.remove('selected'));
+    option.classList.add('selected');
+    
+    // Cerrar el menú
+    this.closeMenu();
+    
+    // Opcional: Disparar evento personalizado para notificar el cambio
+    const event = new CustomEvent('currencyChanged', {
+      detail: { flag, code, name: option.dataset.name }
+    });
+    document.dispatchEvent(event);
+  }
+}
+
+// Inicializar ambas funcionalidades cuando el documento esté listo
+document.addEventListener('DOMContentLoaded', () => {
   new TravelCarousel();
+  new CurrencyDropdown();
+  
+  // Opcional: Escuchar cambios de moneda
+  document.addEventListener('currencyChanged', (e) => {
+    console.log('Moneda cambiada a:', e.detail);
+    // Aquí puedes agregar lógica adicional cuando cambie la moneda
+  });
 });
