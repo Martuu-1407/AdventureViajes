@@ -1,16 +1,67 @@
-document.getElementById("auth-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+// auth.js
 
-  const nombre = document.getElementById("nombre").value;
-  const correo = document.getElementById("correo").value;
-  const contrasena = document.getElementById("contrasena").value;
+// Registro
+const formRegistro = document.querySelector("#registro");
+if (formRegistro) {
+  formRegistro.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const respuesta = await fetch("http://localhost:3000/registrar", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nombre, correo, contrasena }),
+    const formData = new FormData(formRegistro);
+    const data = new URLSearchParams(formData);
+
+    try {
+      const response = await fetch("/registrar", {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      if (response.ok) {
+        alert("Registro exitoso");
+        window.location.href = "/"; // o la página que quieras
+      } else {
+        const text = await response.text();
+        alert("Error en el registro: " + text);
+      }
+    } catch (error) {
+      alert("Error de red o servidor");
+      console.error(error);
+    }
   });
+}
 
-  const resultado = await respuesta.text();
-  alert(resultado);
-});
+// Login
+const formLogin = document.querySelector("#loginForm form");
+if (formLogin) {
+  formLogin.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(formLogin);
+    const data = new URLSearchParams(formData);
+
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      if (response.ok) {
+        alert("Inicio de sesión exitoso");
+        window.location.href = "../vuelos/vuelos.html"; // o dashboard
+      } else if (response.status === 401) {
+        alert("Credenciales incorrectas");
+      } else {
+        const text = await response.text();
+        alert("Error en el inicio de sesión: " + text);
+      }
+    } catch (error) {
+      alert("Error de red o servidor");
+      console.error(error);
+    }
+  });
+}
