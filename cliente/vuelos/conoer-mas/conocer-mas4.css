@@ -7,6 +7,7 @@
     --rojo-hover: #960a0a;
     --gris: #7c7c7c;
     --txt: #000000;
+    --mejor: #09ff00;
 }
 
 * {
@@ -146,7 +147,7 @@ body {
     right: 0;
     bottom: 0;
     background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                url('https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1920&h=800&fit=crop');
+                url('https://images.pexels.com/photos/819764/pexels-photo-819764.jpeg?auto=compress&cs=tinysrgb&w=800');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -777,7 +778,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    height: 110%;
+    height: 112%;
     padding: 0px 0 -10px 0;
     gap: 8px;
 }
@@ -813,8 +814,12 @@ footer {
     background-color: var(--txtylinks);
 }
 
+.max-bar {
+    background-color: var(--rojo-hover);
+}
+
 .best-bar {
-    background-color: var(--rojo);
+    background-color: var(--mejor);
 }
 
 .bar:hover {
