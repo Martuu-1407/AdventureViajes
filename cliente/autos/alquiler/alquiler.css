@@ -146,19 +146,20 @@ body {
 }
 
 .buscador-container {
+    margin-top: -60px;
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 1200px;
-    padding: 0 20px;
+    max-width: 1400px;
+    padding: 0 10px;
 }
 
 .search-form {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    padding: 32px;
+    box-shadow: 0 25px 10px -12px rgba(179, 179, 179, 0.25);
+    padding: 10px;
     transition: all 0.3s ease;
 }
 
