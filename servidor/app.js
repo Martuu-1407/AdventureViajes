@@ -109,15 +109,10 @@ const server = http.createServer((req, res) => {
     req.on("end", () => {
       const datos = JSON.parse(body);
 
-      let horaCorrecta = datos.hora;
-      if (horaCorrecta && horaCorrecta.length === 5) {
-        horaCorrecta += ":00"; // añade segundos si falta
-      }
-
-      const sql = `INSERT INTO vuelos (origen, destino, fecha, hora, precio) VALUES (?, ?, ?, ?, ?)`;
+      const sql = `INSERT INTO vuelos (origen, destino, fecha, precio) VALUES (?, ?, ?, ?)`;
       conexion.query(
         sql,
-        [datos.origen, datos.destino, datos.fecha, horaCorrecta, datos.precio],
+        [datos.origen, datos.destino, datos.fecha, datos.precio],
         (err, resultado) => {
           if (err) {
             console.error("Error al guardar vuelo:", err);
@@ -145,27 +140,45 @@ const server = http.createServer((req, res) => {
     let body = "";
     req.on("data", (chunk) => (body += chunk));
     req.on("end", () => {
-      const datos = JSON.parse(body);
-      const id = datos.id_vuelos; // 👈 usar id_vuelos
+      try {
+        console.log("Body recibido:", body); // 👈 AGREGALO
+        const datos = JSON.parse(body);
+        console.log("Datos parseados:", datos); // 👈 AGREGALO
 
-      if (!id) {
-        res.writeHead(400, { "Content-Type": "text/plain" });
-        res.end("ID no proporcionado");
-        return;
-      }
+        const id = Number(datos.id_vuelo);
+        console.log("ID parseado:", id); // 👈 AGREGALO
 
-      const sql = "DELETE FROM vuelos WHERE id_vuelos = ?";
-      conexion.query(sql, [id], (err, resultado) => {
-        if (err) {
-          console.error("Error al borrar vuelo:", err);
-          res.writeHead(500);
-          res.end("Error al borrar vuelo");
+        if (!id || isNaN(id)) {
+          res.writeHead(400, { "Content-Type": "text/plain" });
+          res.end("ID no proporcionado o inválido");
           return;
         }
 
-        res.writeHead(200);
-        res.end("Vuelo eliminado");
-      });
+        const sql = "DELETE FROM vuelos WHERE id_vuelo = ?";
+        conexion.query(sql, [id], (err, resultado) => {
+          if (err) {
+            console.error("Error al borrar vuelo:", err);
+            res.writeHead(500);
+            res.end("Error al borrar vuelo");
+            return;
+          }
+
+          if (resultado.affectedRows === 0) {
+            console.log("No se encontró el vuelo con ese ID.");
+            res.writeHead(404);
+            res.end("Vuelo no encontrado");
+            return;
+          }
+
+          console.log("Vuelo eliminado correctamente");
+          res.writeHead(200);
+          res.end("Vuelo eliminado");
+        });
+      } catch (e) {
+        console.error("Error al parsear JSON:", e); // 👈 CLAVE
+        res.writeHead(400);
+        res.end("Error en el cuerpo de la solicitud");
+      }
     });
   } else {
     // Servir archivos estáticos para GET y otras solicitudes

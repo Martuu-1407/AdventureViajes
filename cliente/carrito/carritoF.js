@@ -1,3 +1,4 @@
+// Obtener nombre del usuario (si está autenticado)
 fetch("/obtener-nombre", {
   credentials: "include", // 🔥 Necesario para que se envíen las cookies
 })
@@ -13,6 +14,7 @@ fetch("/obtener-nombre", {
     document.getElementById("nombre").textContent = "Invitado";
   });
 
+// Función para formatear la fecha
 function formatearFecha(fechaISO) {
   const fecha = new Date(fechaISO);
   const dia = String(fecha.getDate()).padStart(2, "0");
@@ -20,43 +22,46 @@ function formatearFecha(fechaISO) {
   const año = fecha.getFullYear();
   return `${dia}/${mes}/${año}`;
 }
-function formatearHora(horaSQL) {
-  // Si viene como "08:45:00", corta solo hh:mm
-  return horaSQL?.slice(0, 5) || "";
-}
 
+// Cargar los vuelos al cargar la página
 window.addEventListener("DOMContentLoaded", async () => {
-  const res = await fetch("/obtener-vuelos");
-  const vuelos = await res.json();
+  try {
+    const res = await fetch("/obtener-vuelos");
+    const vuelos = await res.json();
 
-  const contenedor = document.querySelector(".pedidos");
-  contenedor.innerHTML = "";
+    const contenedor = document.querySelector(".pedidos");
+    contenedor.innerHTML = "";
 
-  vuelos.forEach((vuelo) => {
-    const div = document.createElement("div");
-    div.className = "pedido";
-    div.dataset.id = vuelo.id_vuelos; // 👈 usamos id_vuelos
+    vuelos.forEach((vuelo) => {
+      const div = document.createElement("div");
+      div.className = "pedido";
+      div.dataset.id = vuelo.id_vuelo;
 
-    div.innerHTML = `
-      <img src="https://i.ibb.co/v4z7Xw3T/X-circle.png" alt="X-circle" class="btn-borrar" style="cursor:pointer;" />
-      <h3>${vuelo.origen}</h3>
-      <hr class="vertical-line" />
-      <h3>${vuelo.destino}</h3>
-      <hr class="vertical-line" />
-      <p><b>Salida:</b> ${formatearFecha(vuelo.fecha)} ${formatearHora(
-      vuelo.hora
-    )}</p>
-      <hr class="vertical-line" />
-      <p><b>Precio:</b> $${vuelo.precio}</p>
-    `;
+      div.innerHTML = `
+        <img src="https://i.ibb.co/v4z7Xw3T/X-circle.png" alt="X-circle" class="btn-borrar" style="cursor:pointer;" />
+        <h3>${vuelo.origen}</h3>
+        <hr class="vertical-line" />
+        <h3>${vuelo.destino}</h3>
+        <hr class="vertical-line" />
+        <p><b>Salida:</b> ${formatearFecha(vuelo.fecha)}</p>
+        <hr class="vertical-line" />
+        <p><b>Precio:</b> $${vuelo.precio}</p>
+      `;
 
-    contenedor.appendChild(div);
-  });
+      contenedor.appendChild(div);
+    });
+  } catch (error) {
+    console.error("Error al obtener vuelos:", error);
+  }
 });
-document.querySelectorAll(".btn-borrar").forEach((btn) => {
-  btn.addEventListener("click", async (e) => {
+
+// Delegación de eventos para borrar vuelos
+document.querySelector(".pedidos").addEventListener("click", async (e) => {
+  if (e.target.classList.contains("btn-borrar")) {
     const vueloDiv = e.target.closest(".pedido");
     const vueloId = vueloDiv.dataset.id;
+    console.log("ID capturado desde dataset:", vueloId);
+    console.log("Tipo de dato:", typeof vueloId);
 
     try {
       const res = await fetch("/borrar-vuelo", {
@@ -64,17 +69,17 @@ document.querySelectorAll(".btn-borrar").forEach((btn) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id_vuelos: vueloId }), // 👈 enviar id_vuelos
+        body: JSON.stringify({ id_vuelo: Number(vueloId) }),
       });
 
       if (res.ok) {
-        vueloDiv.remove(); // borrar del DOM
+        vueloDiv.remove(); // Eliminar del DOM
       } else {
         alert("Error al eliminar el vuelo");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Error en la conexión:", err);
       alert("Fallo la conexión con el servidor");
     }
-  });
+  }
 });
