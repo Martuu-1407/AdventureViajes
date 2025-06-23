@@ -105,38 +105,67 @@ const server = http.createServer((req, res) => {
     });
   } else if (req.method === "POST" && req.url === "/guardar-vuelo") {
     let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString();
-    });
+    req.on("data", (chunk) => (body += chunk));
     req.on("end", () => {
       const datos = JSON.parse(body);
 
-      const sql = `INSERT INTO vuelos (origen, destino, fecha, precio)
-                 VALUES (?, ?, ?, ?)`;
-      const valores = [datos.origen, datos.destino, datos.fecha, datos.precio];
+      let horaCorrecta = datos.hora;
+      if (horaCorrecta && horaCorrecta.length === 5) {
+        horaCorrecta += ":00"; // añade segundos si falta
+      }
 
-      conexion.query(sql, valores, (err) => {
-        if (err) {
-          console.error("Error al guardar vuelo:", err);
-          res.writeHead(500, { "Content-Type": "text/plain" });
-          res.end("Error al guardar");
-        } else {
-          res.writeHead(200, { "Content-Type": "text/plain" });
-          res.end("Vuelo guardado");
+      const sql = `INSERT INTO vuelos (origen, destino, fecha, hora, precio) VALUES (?, ?, ?, ?, ?)`;
+      conexion.query(
+        sql,
+        [datos.origen, datos.destino, datos.fecha, horaCorrecta, datos.precio],
+        (err, resultado) => {
+          if (err) {
+            console.error("Error al guardar vuelo:", err);
+            res.writeHead(500);
+            res.end("Error al guardar vuelo");
+          } else {
+            res.writeHead(200);
+            res.end("Vuelo guardado con éxito");
+          }
         }
-      });
+      );
     });
   } else if (req.method === "GET" && req.url === "/obtener-vuelos") {
-    const sql = "SELECT * FROM vuelos";
+    const sql = "SELECT * FROM vuelos"; // 👈 esto debe incluir la columna `hora`
     conexion.query(sql, (err, resultados) => {
       if (err) {
-        console.error("Error al obtener vuelos:", err);
-        res.writeHead(500, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Error al obtener vuelos" }));
+        res.writeHead(500);
+        res.end("Error al obtener vuelos");
       } else {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify(resultados));
       }
+    });
+  } else if (req.method === "POST" && req.url === "/borrar-vuelo") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      const datos = JSON.parse(body);
+      const id = datos.id_vuelos; // 👈 usar id_vuelos
+
+      if (!id) {
+        res.writeHead(400, { "Content-Type": "text/plain" });
+        res.end("ID no proporcionado");
+        return;
+      }
+
+      const sql = "DELETE FROM vuelos WHERE id_vuelos = ?";
+      conexion.query(sql, [id], (err, resultado) => {
+        if (err) {
+          console.error("Error al borrar vuelo:", err);
+          res.writeHead(500);
+          res.end("Error al borrar vuelo");
+          return;
+        }
+
+        res.writeHead(200);
+        res.end("Vuelo eliminado");
+      });
     });
   } else {
     // Servir archivos estáticos para GET y otras solicitudes

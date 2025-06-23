@@ -6,8 +6,11 @@ document.querySelectorAll(".select-flight-btn").forEach((btn) => {
       origen: card.dataset.origen,
       destino: card.dataset.destino,
       fecha: card.dataset.fecha,
+      hora: card.dataset.hora, // <--- esto debe ser "08:45"
       precio: card.dataset.precio,
     };
+
+    console.log("Hora seleccionada:", vuelo.hora); // <-- debería decir: 14:20
 
     const res = await fetch("/guardar-vuelo", {
       method: "POST",
@@ -17,10 +20,8 @@ document.querySelectorAll(".select-flight-btn").forEach((btn) => {
 
     if (res.ok) {
       alert("Vuelo agregado al carrito");
-      // Podés redirigir si querés:
-      // window.location.href = "/carrito.html";
     } else {
-      alert("Error al guardar vuelo");
+      alert("Error al guardar el vuelo");
     }
   });
 });
