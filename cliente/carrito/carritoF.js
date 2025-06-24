@@ -39,7 +39,7 @@ async function cargarCarrito() {
   let total = 0;
 
   try {
-    // Traer vuelos
+    // Obtener vuelos
     const resVuelos = await fetch("/obtener-vuelos");
     const vuelos = await resVuelos.json();
 
@@ -62,7 +62,7 @@ async function cargarCarrito() {
       total += Number(vuelo.precio);
     });
 
-    // Traer paquetes
+    // Obtener paquetes
     const resPaquetes = await fetch("/obtener-paquetes");
     const paquetes = await resPaquetes.json();
 
@@ -78,7 +78,6 @@ async function cargarCarrito() {
         <hr class="vertical-line" />
         <p><b>Fecha:</b> ${formatearFecha(paquete.fecha)}</p>
         <hr class="vertical-line" />
-
         <p><b>Pasajeros:</b> ${paquete.pasajeros}</p>
         <hr class="vertical-line" />
         <p><b>Precio:</b> $${Number(paquete.precio).toLocaleString("es-AR")}</p>
@@ -86,6 +85,31 @@ async function cargarCarrito() {
 
       contenedor.appendChild(div);
       total += Number(paquete.precio);
+    });
+
+    // Obtener autos
+    const resAutos = await fetch("/obtener-autos");
+    const autos = await resAutos.json();
+
+    autos.forEach((auto) => {
+      const div = document.createElement("div");
+      div.className = "pedido";
+      div.dataset.tipo = "auto";
+      div.dataset.id = auto.id_auto;
+
+      div.innerHTML = `
+        <img src="https://i.ibb.co/v4z7Xw3T/X-circle.png" alt="X-circle" class="btn-borrar" style="cursor:pointer;" />
+        <h3>${auto.modelo} - ${auto.ciudad}</h3>
+        <hr class="vertical-line" />
+        <p><b>Plazas:</b> ${auto.plazas}</p>
+        <hr class="vertical-line" />
+        <p><b>Precio por día:</b> $${Number(auto.precio_dia).toLocaleString(
+          "es-AR"
+        )}</p>
+      `;
+
+      contenedor.appendChild(div);
+      total += Number(auto.precio_dia);
     });
 
     document.getElementById("total").textContent =
@@ -99,36 +123,50 @@ window.addEventListener("DOMContentLoaded", cargarCarrito);
 
 document.querySelector(".pedidos").addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-borrar")) {
-    const pedidoDiv = e.target.closest(".pedido");
-    const id = pedidoDiv.dataset.id;
-    const tipo = pedidoDiv.dataset.tipo; // "vuelo" o "paquete"
+    const itemDiv = e.target.closest(".pedido");
+    const tipo = itemDiv.dataset.tipo;
+    const id = itemDiv.dataset.id;
 
-    let endpoint;
-    let bodyData;
+    let url = "";
+    let body = {};
 
     if (tipo === "vuelo") {
-      endpoint = "/borrar-vuelo";
-      bodyData = { id_vuelo: Number(id) };
+      url = "/borrar-vuelo";
+      body = { id_vuelo: Number(id) };
     } else if (tipo === "paquete") {
-      endpoint = "/borrar-paquete";
-      bodyData = { id_paquete: Number(id) };
+      url = "/borrar-paquete";
+      body = { id_paquete: Number(id) };
+    } else if (tipo === "auto") {
+      url = "/borrar-auto";
+      body = { id_auto: Number(id) };
     } else {
-      alert("Tipo de item desconocido");
+      alert("Tipo de item desconocido para borrar");
       return;
     }
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyData),
+        body: JSON.stringify(body),
       });
 
       if (res.ok) {
-        // Remover el item del DOM
-        pedidoDiv.remove();
-        // Recargar el carrito para recalcular total y refrescar la lista
-        cargarCarrito();
+        itemDiv.remove();
+
+        // 🔁 Recalcular total
+        let total = 0;
+        document.querySelectorAll(".pedido").forEach((div) => {
+          const precioText = div.querySelector("p:last-of-type").textContent;
+          const precio = precioText
+            .replace(/[^\d,.-]/g, "")
+            .replace(/\./g, "")
+            .replace(",", ".");
+          total += parseFloat(precio);
+        });
+
+        document.getElementById("total").textContent =
+          total.toLocaleString("es-AR");
       } else {
         const errorText = await res.text();
         alert("Error al eliminar el item: " + errorText);

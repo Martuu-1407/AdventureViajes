@@ -219,6 +219,33 @@ const server = http.createServer((req, res) => {
         res.end("Error en el cuerpo de la solicitud");
       }
     });
+  } else if (req.method === "POST" && req.url === "/guardar-auto") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try {
+        const datos = JSON.parse(body);
+        const sql = `INSERT INTO autos (modelo, ciudad, plazas, precio_dia) VALUES (?, ?, ?, ?)`;
+        conexion.query(
+          sql,
+          [datos.modelo, datos.ciudad, datos.plazas, datos.precio_dia],
+          (err, resultado) => {
+            if (err) {
+              console.error("Error al guardar auto:", err);
+              res.writeHead(500);
+              res.end("Error al guardar auto");
+            } else {
+              res.writeHead(200);
+              res.end("Auto guardado con éxito");
+            }
+          }
+        );
+      } catch (e) {
+        console.error("Error al parsear JSON:", e);
+        res.writeHead(400);
+        res.end("Error en el cuerpo de la solicitud");
+      }
+    });
   } else if (req.method === "POST" && req.url === "/guardar-paquete") {
     let body = "";
     req.on("data", (chunk) => (body += chunk));
@@ -248,6 +275,17 @@ const server = http.createServer((req, res) => {
         res.end("Error en el cuerpo de la solicitud");
       }
     });
+  } else if (req.method === "GET" && req.url === "/obtener-autos") {
+    const sql = "SELECT * FROM autos";
+    conexion.query(sql, (err, resultados) => {
+      if (err) {
+        res.writeHead(500);
+        res.end("Error al obtener autos");
+      } else {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(resultados));
+      }
+    });
   } else if (req.method === "GET" && req.url === "/obtener-paquetes") {
     const sql = "SELECT * FROM paquetes";
     conexion.query(sql, (err, resultados) => {
@@ -257,6 +295,40 @@ const server = http.createServer((req, res) => {
       } else {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify(resultados));
+      }
+    });
+  } else if (req.method === "POST" && req.url === "/borrar-auto") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try {
+        const datos = JSON.parse(body);
+        const id = Number(datos.id_auto);
+        if (!id || isNaN(id)) {
+          res.writeHead(400);
+          res.end("ID no válido");
+          return;
+        }
+        const sql = "DELETE FROM autos WHERE id_auto = ?";
+        conexion.query(sql, [id], (err, resultado) => {
+          if (err) {
+            console.error("Error al borrar auto:", err);
+            res.writeHead(500);
+            res.end("Error al borrar auto");
+            return;
+          }
+          if (resultado.affectedRows === 0) {
+            res.writeHead(404);
+            res.end("Auto no encontrado");
+            return;
+          }
+          res.writeHead(200);
+          res.end("Auto eliminado");
+        });
+      } catch (e) {
+        console.error("Error al parsear JSON:", e);
+        res.writeHead(400);
+        res.end("Error en el cuerpo de la solicitud");
       }
     });
   } else {
