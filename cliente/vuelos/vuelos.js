@@ -1,3 +1,18 @@
+// Menú desplegable personalizado del botón hamburguesa
+const menuBtn = document.querySelector('.menu');
+const menuDropdown = document.getElementById('mainMenuDropdown');
+
+menuBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  menuDropdown.style.display = (menuDropdown.style.display === 'flex') ? 'none' : 'flex';
+});
+
+document.addEventListener('click', (e) => {
+  if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+    menuDropdown.style.display = 'none';
+  }
+});
+
 // Definición de la clase TravelCarousel que manejará el carrusel de imágenes
 class TravelCarousel {
   constructor() {
@@ -93,6 +108,8 @@ class CurrencyDropdown {
       this.toggleMenu();
     });
 
+    
+
     // Eventos para seleccionar moneda
     this.options.forEach(option => {
       option.addEventListener('click', (e) => {
@@ -115,6 +132,7 @@ class CurrencyDropdown {
       }
     });
   }
+    
 
   toggleMenu() {
     if (this.dropdown.classList.contains('open')) {
