@@ -69,6 +69,33 @@ body {
     border-radius: 150px;
 }
 
+.menu-dropdown {
+    position: absolute;
+    top: 60px; /* Ajustá según la altura del header */
+    left: 1px;
+    background-color: var(--header-color);
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    height: 250px;
+    width: 200px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  }
+  
+  .menu-dropdown a {
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  
+  .menu-dropdown a:hover {
+    background-color: #f0f0f0;
+  }
+  
+
 .nav-compu {
     display: flex;
     align-items: center;
@@ -129,6 +156,114 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
+}
+.search-section {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.search-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                url('https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1920&h=800&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.search-form {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 32px;
+    transition: all 0.3s ease;
+}
+
+.search-form:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    align-items: end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    z-index: 1;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    padding: 14px 14px 14px 44px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+    outline: none;
+    border-color: var(--txtylinks);
+    box-shadow: 0 0 0 3px rgba(0, 178, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.search-btn {
+    width: 100%;
+    background: var(--rojo);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+}
+
+.search-btn:hover {
+    background: var(--rojo-hover);
+    box-shadow: 0 6px 20px 0 rgba(239, 68, 68, 0.5);
+    transform: translateY(-2px);
 }
 
 /* Sección del carrusel */
@@ -935,6 +1070,10 @@ footer {
         width: 90px;
         height: 87px;
     }
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
     
     .nav-compu {
         gap: 10px;
@@ -949,8 +1088,48 @@ footer {
     }
 }
 
-/* Tablets y celu*/
+/* Tablets y celu 175%*/ 
 @media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .nav-desktop,
+    .user-section-desktop {
+        display: none;
+    }
+
+    .mobile-menu {
+        top: 70px;
+    }
+
+    .carousel-slide {
+        flex-direction: column;
+        padding: 20px;
+        gap: 16px;
+    }
+    
+    .destination-name {
+        font-size: 24px;
+    }
+    
+    .price {
+        font-size: 22px;
+    }
+    
+    .card-image {
+        height: 220px;
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .search-form {
+        padding: 24px;
+    }
     .header-content {
         height: 80px;
         padding: 0 15px;
@@ -1014,10 +1193,10 @@ footer {
     }
 }
 
-/* celu (hasta 600px) */
+/* celu (hasta 600px) 250% */
 @media (max-width: 600px) {
     .header-content {
-        height: 70px;
+        height: 60px;
     }
     
     .logo-image {
