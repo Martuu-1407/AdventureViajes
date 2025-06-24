@@ -249,8 +249,20 @@
   color: #3b82f6;
 }
 
-
-.img-banderas{
+.img-banderas {
   max-width: 25px;
 }
 
+.btn-agregar-carrito {
+  background-color: var(--rojo);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.btn-agregar-carrito:hover {
+  background-color: var(--rojo-hover);
+}
