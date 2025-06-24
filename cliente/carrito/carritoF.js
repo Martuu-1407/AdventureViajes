@@ -14,6 +14,15 @@ fetch("/obtener-nombre", {
     document.getElementById("nombre").textContent = "Invitado";
   });
 
+// Función para calcular y mostrar el total
+function calcularTotal(items) {
+  let total = 0;
+  items.forEach((item) => {
+    total += Number(item.precio);
+  });
+  document.getElementById("total").textContent = total.toLocaleString("es-AR");
+}
+
 // Función para formatear fecha
 function formatearFecha(fechaISO) {
   const fecha = new Date(fechaISO);
@@ -23,82 +32,106 @@ function formatearFecha(fechaISO) {
   return `${dia}/${mes}/${año}`;
 }
 
-// Función para calcular y mostrar el total
-function calcularTotal(vuelos) {
+async function cargarCarrito() {
+  const contenedor = document.querySelector(".pedidos");
+  contenedor.innerHTML = "";
+
   let total = 0;
-  vuelos.forEach((vuelo) => {
-    total += Number(vuelo.precio);
-  });
-  document.getElementById("total").textContent = total.toLocaleString("es-AR");
-}
 
-// Cargar los vuelos al cargar la página
-window.addEventListener("DOMContentLoaded", async () => {
   try {
-    const res = await fetch("/obtener-vuelos");
-    const vuelos = await res.json();
-
-    const contenedor = document.querySelector(".pedidos");
-    contenedor.innerHTML = "";
+    // Traer vuelos
+    const resVuelos = await fetch("/obtener-vuelos");
+    const vuelos = await resVuelos.json();
 
     vuelos.forEach((vuelo) => {
       const div = document.createElement("div");
       div.className = "pedido";
+      div.dataset.tipo = "vuelo";
       div.dataset.id = vuelo.id_vuelo;
 
       div.innerHTML = `
         <img src="https://i.ibb.co/v4z7Xw3T/X-circle.png" alt="X-circle" class="btn-borrar" style="cursor:pointer;" />
-        <h3>${vuelo.origen}</h3>
-        <hr class="vertical-line" />
-        <h3>${vuelo.destino}</h3>
+        <h3>${vuelo.origen} → ${vuelo.destino}</h3>
         <hr class="vertical-line" />
         <p><b>Salida:</b> ${formatearFecha(vuelo.fecha)}</p>
         <hr class="vertical-line" />
         <p><b>Precio:</b> $${Number(vuelo.precio).toLocaleString("es-AR")}</p>
-
       `;
 
       contenedor.appendChild(div);
+      total += Number(vuelo.precio);
     });
 
-    calcularTotal(vuelos);
-  } catch (error) {
-    console.error("Error al obtener vuelos:", error);
-  }
-});
+    // Traer paquetes
+    const resPaquetes = await fetch("/obtener-paquetes");
+    const paquetes = await resPaquetes.json();
 
-// Delegación de eventos para borrar vuelos
+    paquetes.forEach((paquete) => {
+      const div = document.createElement("div");
+      div.className = "pedido";
+      div.dataset.tipo = "paquete";
+      div.dataset.id = paquete.id_paquete;
+
+      div.innerHTML = `
+        <img src="https://i.ibb.co/v4z7Xw3T/X-circle.png" alt="X-circle" class="btn-borrar" style="cursor:pointer;" />
+        <h3>${paquete.destino}</h3>
+        <hr class="vertical-line" />
+        <p><b>Fecha:</b> ${formatearFecha(paquete.fecha)}</p>
+        <hr class="vertical-line" />
+
+        <p><b>Pasajeros:</b> ${paquete.pasajeros}</p>
+        <hr class="vertical-line" />
+        <p><b>Precio:</b> $${Number(paquete.precio).toLocaleString("es-AR")}</p>
+      `;
+
+      contenedor.appendChild(div);
+      total += Number(paquete.precio);
+    });
+
+    document.getElementById("total").textContent =
+      total.toLocaleString("es-AR");
+  } catch (error) {
+    console.error("Error al cargar carrito:", error);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", cargarCarrito);
+
 document.querySelector(".pedidos").addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-borrar")) {
-    const vueloDiv = e.target.closest(".pedido");
-    const vueloId = vueloDiv.dataset.id;
+    const pedidoDiv = e.target.closest(".pedido");
+    const id = pedidoDiv.dataset.id;
+    const tipo = pedidoDiv.dataset.tipo; // "vuelo" o "paquete"
 
-    console.log("ID capturado desde dataset:", vueloId);
+    let endpoint;
+    let bodyData;
+
+    if (tipo === "vuelo") {
+      endpoint = "/borrar-vuelo";
+      bodyData = { id_vuelo: Number(id) };
+    } else if (tipo === "paquete") {
+      endpoint = "/borrar-paquete";
+      bodyData = { id_paquete: Number(id) };
+    } else {
+      alert("Tipo de item desconocido");
+      return;
+    }
 
     try {
-      const res = await fetch("/borrar-vuelo", {
+      const res = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id_vuelo: Number(vueloId) }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyData),
       });
 
       if (res.ok) {
-        vueloDiv.remove();
-
-        // Recalcular total después de eliminar
-        const vuelosRestantes = Array.from(
-          document.querySelectorAll(".pedido")
-        ).map((div) => {
-          const precioText = div.querySelector("p:last-of-type").textContent;
-          const precio = precioText.split("$")[1];
-          return { precio };
-        });
-
-        calcularTotal(vuelosRestantes);
+        // Remover el item del DOM
+        pedidoDiv.remove();
+        // Recargar el carrito para recalcular total y refrescar la lista
+        cargarCarrito();
       } else {
-        alert("Error al eliminar el vuelo");
+        const errorText = await res.text();
+        alert("Error al eliminar el item: " + errorText);
       }
     } catch (err) {
       console.error("Error en la conexión:", err);
