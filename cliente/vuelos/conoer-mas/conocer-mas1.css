@@ -60,13 +60,70 @@ body {
     background-color: var(--header-color);
     cursor: pointer;
     padding: 10px;
-}
-
-.menu:hover {
+  }
+  
+  .menu:hover {
     background-color: var(--hover-amarillo);
     transform: translateY(2px);
     border-radius: 150px;
-}
+  }
+
+.menu-dropdown {
+    position: absolute;
+    top: 60px; /* Ajustá según la altura del header */
+    left: 1px;
+    background-color: var(--header-color);
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    height: 198px;
+    width: 200px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .menu-dropdown a {
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  
+  .menu-dropdown a:hover {
+    background-color: var(--hover-amarillo);
+    border-radius: 8px;
+  }
+
+.user-item-movil {
+    display: none;
+  }
+  
+  .user-item-dropdown {
+    position: absolute;
+    top: 110px; /* Ajustá según la altura del header */
+    right: 1px;
+    background-color: var(--header-color);
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    height: 50px;
+    width: 200px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .user-item-dropdown a {
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  
+  .user-item-dropdown a:hover {
+    background-color: #f0f0f0;
+  }
 
 .nav-compu {
     display: flex;
@@ -1235,6 +1292,48 @@ footer {
     .footer-title {
         font-size: 1.3rem;
     }
+
+    .user-item {
+        display: none;
+      }
+    
+      .user-item-movil {
+        display: flex;
+        margin: 20px;
+      }
+      .user-item-movil:hover {
+        color: var(--txt);
+        background-color: var(--hover-amarillo);
+        transform: translateY(-2px);
+        border-radius: 10px;
+      }
+    
+      .user-item-movil-dropdown {
+        position: absolute;
+        top: 50px; /* Ajustá según la altura del header */
+        right: 0px;
+        background-color: var(--header-color);
+        border-radius: 8px;
+        display: none;
+        flex-direction: column;
+        height: 50px;
+        width: 200px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      }
+    
+      .user-item-movil-dropdown a {
+        padding: 12px 16px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+    
+      .user-item-movil-dropdown a:hover {
+        background-color: var(--hover-amarillo);
+        border-radius: 8px;
+      }
 }
 
 /* celu (hasta 600px) */

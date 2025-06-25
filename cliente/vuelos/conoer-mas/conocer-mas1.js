@@ -1,3 +1,44 @@
+// Menú desplegable personalizado del botón hamburguesa
+const menuBtn = document.querySelector('.menu');
+const menuDropdown = document.getElementById('mainMenuDropdown');
+
+menuBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  menuDropdown.style.display = (menuDropdown.style.display === 'flex') ? 'none' : 'flex';
+});
+
+document.addEventListener('click', (e) => {
+  if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+    menuDropdown.style.display = 'none';
+  }
+});
+const userBtn = document.querySelector('.user-item');
+const userDropdown = document.getElementById('user-itemDropdown');
+
+userBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  userDropdown.style.display = (userDropdown.style.display === 'flex') ? 'none' : 'flex';
+});
+
+document.addEventListener('click', (e) => {
+  if (!userDropdown.contains(e.target) && !userBtn.contains(e.target)) {
+    userDropdown.style.display = 'none';
+  }
+});
+const usermovilBtn = document.querySelector('.user-item-movil');
+const usermovilDropdown = document.getElementById('usermovil-itemDropdown');
+
+usermovilBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  usermovilDropdown.style.display = (usermovilDropdown.style.display === 'flex') ? 'none' : 'flex';
+});
+
+document.addEventListener('click', (e) => {
+  if (!usermovilDropdown.contains(e.target) && !usermovilBtn.contains(e.target)) {
+    usermovilDropdown.style.display = 'none';
+  }
+});
+
 // Datos del gráfico de precios
 const priceData = {
     months: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'],

@@ -10,35 +10,199 @@
   --fondos: #eee5e9;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.header {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--header-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110px;
+  background-color: var(--header-color);
+  position: relative;
+  padding: 0 20px;
+}
+
+.logo-image {
+  width: 110px;
+  height: 107px;
+  object-fit: contain;
+}
+
+.menu {
+  display: none;
+  border: none;
+  background-color: var(--header-color);
+  cursor: pointer;
+  padding: 10px;
+}
+
+.nav-compu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.btn-nav:hover {
+  background-color: var(--hover-amarillo);
+}
+
+.compu-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Footer Styles */
+footer {
+  background-color: var(--amarillo);
+  color: var(--txt);
+  margin-top: 4rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem 1rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--txt);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--gris);
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-links a {
+  color: var(--txt);
+  font-size: 1.5rem;
+  transition: color 0.2s;
+}
+
+.social-links a:hover {
+  color: var(--txt);
+}
+
+.footer-bottom {
+  border-top: 1px solid #374151;
+  padding-top: 1rem;
+  text-align: center;
+  color: #9ca3af;
+}
+
+/* Main Content Styles */
 h1 {
   text-align: center;
+  margin: 2rem 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.pedidos {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .pedido {
   background-color: var(--fondos);
   padding: 20px;
-  margin: 10px auto auto auto;
-  width: 60%;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 800px;
   align-items: center;
   border-radius: 10px;
-
   display: flex;
+  gap: 1rem;
 }
 
 .pedido h3 {
-  margin-left: 20px;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
-.linea {
-  background-color: var(--gris);
-  width: 2px;
-  height: 100%;
+.pedido p {
+  margin: 0.25rem 0;
+  color: var(--gris);
 }
+
 .vertical-line {
   border: none;
   border-left: 2px solid #999;
-  height: 40px;
-  margin: 0 20px;
+  height: 60px;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .pedido img:hover {
@@ -49,81 +213,106 @@ h1 {
 
 .abajo {
   display: flex;
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cupones {
-  margin-left: 220px;
-  margin-top: 20px;
-  width: 500px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
   text-align: center;
 }
 
-.incluir {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+.cupones h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .ingresar {
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  margin-left: 100px;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
 }
 
 .ingresar input {
-  width: 200px;
+  flex: 1;
+  min-width: 200px;
   padding: 10px;
   background-color: var(--amarillo);
   border: 1px solid black;
   border-radius: 20px;
   color: white;
-  margin-right: 10px;
 }
 
 .ingresar input::placeholder {
   color: var(--txt);
 }
+
 .agregado {
   display: flex;
-  margin-left: 100px;
-  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .agregado p {
-  margin-left: 10px;
+  margin: 0;
   color: var(--txt);
 }
 
 .aplicar,
 .finalizar {
   background-color: var(--rojo);
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 20px;
   color: white;
   font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .aplicar:hover,
 .finalizar:hover {
   background-color: var(--rojo-hover);
-  cursor: pointer;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 .total {
   background-color: var(--fondos);
-  margin-top: 20px;
   padding: 20px;
-  width: 400px;
+  min-width: 300px;
+  max-width: 400px;
   border-radius: 20px;
   text-align: center;
+  flex-shrink: 0;
+}
+
+.total h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .total-pedido {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0.5rem 0;
+}
+
+.total-pedido p {
+  margin: 0;
 }
 
 .lineaHor {
@@ -132,7 +321,14 @@ h1 {
   width: 100%;
   margin: 20px 0;
 }
-/* Estilos del menú desplegable de monedas */
+
+.finalizar {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 12px;
+}
+
+/* Currency Dropdown Styles */
 .currency-dropdown {
   position: relative;
   display: inline-block;
@@ -241,8 +437,194 @@ h1 {
   color: #3b82f6;
 }
 
-
-.img-banderas{
+.img-banderas {
   max-width: 25px;
 }
 
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .abajo {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cupones {
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  .total {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: block;
+  }
+  
+  .nav-compu {
+    display: none;
+  }
+  
+  .compu-user {
+    gap: 0.5rem;
+  }
+  
+  .user-item span {
+    display: none;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .pedido {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .pedido img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .vertical-line {
+    display: none;
+  }
+  
+  .abajo {
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
+  
+  .cupones {
+    min-width: auto;
+  }
+  
+  .ingresar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .ingresar input {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .aplicar {
+    width: 100%;
+  }
+  
+  .total {
+    min-width: auto;
+  }
+  
+  .currency-menu {
+    right: 0;
+    left: auto;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  .header-content {
+    gap: 0.5rem;
+  }
+  
+  .logo-image {
+    height: 30px;
+  }
+  
+  .pedidos {
+    padding: 0 0.5rem;
+  }
+  
+  .pedido {
+    margin: 10px 0;
+    padding: 10px;
+  }
+  
+  .pedido h3 {
+    font-size: 1rem;
+  }
+  
+  .pedido img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .cupones h2,
+  .total h2 {
+    font-size: 1.25rem;
+  }
+  
+  .total {
+    padding: 15px;
+  }
+  
+  .currency-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .currency-menu {
+    min-width: 180px;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .footer-container {
+    padding: 2rem 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  h1 {
+    font-size: 1.25rem;
+  }
+  
+  .pedido {
+    padding: 8px;
+  }
+  
+  .pedido h3 {
+    font-size: 0.9rem;
+  }
+  
+  .pedido p {
+    font-size: 0.8rem;
+  }
+  
+  .pedido img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .total,
+  .cupones {
+    padding: 10px;
+  }
+  
+  .ingresar input {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .aplicar,
+  .finalizar {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
