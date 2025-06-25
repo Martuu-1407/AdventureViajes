@@ -1,64 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const currencyMenu = document.getElementById("currencyMenu");
-  const currentFlag = document.getElementById("currentFlag");
-  const currentCode = document.getElementById("currentCode");
+// Tasa de cambio manual (o más adelante podés usar una API para hacerlo dinámico)
+const tasaCambioUSD = 0.0008403; // 1 ARS = 0.0008403 USD
+const tasaCambioRE = 0.004671; // 1ARS = 0.004671 RE
+const tasaCambioEUR = 0.0007209; // 1 ARS = 0.0007209 EUR
 
-  // Tasas de conversión con base en AR$
-  const tasas = {
-    AR$: 1,
-    USD: 0.0053, // Ejemplo: 1 AR$ = 0.0053 USD
-    R$: 0.028, // Ejemplo Reales
-    EU: 0.0048, // Ejemplo Euros
-  };
+const currencyOptions = document.querySelectorAll(".currency-option");
+const precios = document.querySelectorAll(".cambio");
 
-  // Símbolos para cada moneda
-  const simbolos = {
-    AR$: "$",
-    USD: "US$",
-    R$: "R$",
-    EU: "€",
-  };
+currencyOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    const currencyCode = option.dataset.code;
 
-  currencyMenu.addEventListener("click", (e) => {
-    const opcion = e.target.closest(".currency-option");
-    if (!opcion) return;
+    precios.forEach((precio) => {
+      const valorOriginal = parseFloat(precio.dataset.precio);
 
-    const nuevoCodigo = opcion.dataset.code;
-    const nuevaBandera = opcion.dataset.flag;
-
-    currentCode.textContent = nuevoCodigo;
-    currentFlag.textContent = nuevaBandera;
-
-    const tasa = tasas[nuevoCodigo];
-    const simbolo = simbolos[nuevoCodigo];
-
-    actualizarPreciosYSimbolo(tasa, simbolo);
-  });
-
-  function actualizarPreciosYSimbolo(tasa, simbolo) {
-    document.querySelectorAll(".price-info").forEach((info) => {
-      const priceElem = info.querySelector(".price");
-      const simboloElem = info.querySelector(".currency-symbol");
-
-      if (!priceElem || !simboloElem) return;
-
-      // Tomamos el precio original del atributo data
-      const precioOriginal = info.dataset.precioOriginal;
-
-      if (!precioOriginal) return;
-
-      const precioNum = Number(precioOriginal);
-      if (isNaN(precioNum)) return;
-
-      const nuevoPrecio = precioNum * tasa;
-
-      // Actualizar texto con formato local sin decimales
-      priceElem.textContent = nuevoPrecio.toLocaleString("es-AR", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
-
-      simboloElem.textContent = simbolo;
+      if (currencyCode === "USD") {
+        const valorConvertido = (valorOriginal * tasaCambioUSD).toFixed(2);
+        precio.textContent = `USD $${valorConvertido}`;
+      } else if (currencyCode === "AR$") {
+        precio.textContent = `AR$ ${valorOriginal.toLocaleString("es-AR")}`;
+      } else if (currencyCode === "R$") {
+        const valorConvertido = (valorOriginal * tasaCambioRE).toFixed(2);
+        precio.textContent = `R$ $${valorConvertido}`;
+      } else if (currencyCode === "EU") {
+        const valorConvertido = (valorOriginal * tasaCambioEUR).toFixed(2);
+        precio.textContent = ` €${valorConvertido}`;
+      }
     });
-  }
+  });
 });
