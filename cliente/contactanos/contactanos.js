@@ -1,3 +1,16 @@
+document.addEventListener('click', (e) => {
+  if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+    menuDropdown.style.display = 'none';
+  }
+});
+const userBtn = document.querySelector('.user-item');
+const userDropdown = document.getElementById('user-itemDropdown');
+
+userBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  userDropdown.style.display = (userDropdown.style.display === 'flex') ? 'none' : 'flex';
+});
+
 fetch("/obtener-nombre", {
   credentials: "include", // 🔥 Necesario para que se envíen las cookies
 })
