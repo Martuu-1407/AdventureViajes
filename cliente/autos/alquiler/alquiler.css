@@ -70,6 +70,32 @@ body {
   border-radius: 150px;
 }
 
+.user-item-dropdown {
+  position: absolute;
+  top: 110px; /* Ajustá según la altura del header */
+  right: 1px;
+  background-color: var(--header-color);
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  height: 50px;
+  width: 200px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.user-item-dropdown a {
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.user-item-dropdown a:hover {
+  background-color: #f0f0f0;
+}
+
 .nav-compu {
   display: flex;
   align-items: center;
