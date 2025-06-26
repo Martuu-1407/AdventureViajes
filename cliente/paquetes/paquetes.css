@@ -169,6 +169,7 @@ body {
 }
 
 .destination-card {
+  min-width: 380px;
   flex: 1;
   border-radius: 16px;
   overflow: hidden;
@@ -194,7 +195,6 @@ body {
 }
 
 .card-image::before {
-  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -553,11 +553,9 @@ body {
   color: #3b82f6;
 }
 
-
-.img-banderas{
+.img-banderas {
   max-width: 25px;
 }
-
 
 footer {
   background-color: var(--amarillo);
