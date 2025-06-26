@@ -14,15 +14,6 @@ fetch("/obtener-nombre", {
     document.getElementById("nombre").textContent = "Invitado";
   });
 
-// Función para calcular y mostrar el total
-function calcularTotal(items) {
-  let total = 0;
-  items.forEach((item) => {
-    total += Number(item.precio);
-  });
-  document.getElementById("total").textContent = total.toLocaleString("es-AR");
-}
-
 // Función para formatear fecha
 function formatearFecha(fechaISO) {
   const fecha = new Date(fechaISO);
@@ -32,14 +23,13 @@ function formatearFecha(fechaISO) {
   return `${dia}/${mes}/${año}`;
 }
 
+// Cargar productos en el carrito
 async function cargarCarrito() {
   const contenedor = document.querySelector(".pedidos");
   contenedor.innerHTML = "";
 
-  let total = 0;
-
   try {
-    // Obtener vuelos
+    // Vuelos
     const resVuelos = await fetch("/obtener-vuelos");
     const vuelos = await resVuelos.json();
 
@@ -55,14 +45,16 @@ async function cargarCarrito() {
         <hr class="vertical-line" />
         <p><b>Salida:</b> ${formatearFecha(vuelo.fecha)}</p>
         <hr class="vertical-line" />
-        <p><b>Precio:</b> $${Number(vuelo.precio).toLocaleString("es-AR")}</p>
+        <p class="precio" data-precio="${
+          vuelo.precio
+        }"><b>Precio:</b> AR$ ${Number(vuelo.precio).toLocaleString(
+        "es-AR"
+      )}</p>
       `;
-
       contenedor.appendChild(div);
-      total += Number(vuelo.precio);
     });
 
-    // Obtener paquetes
+    // Paquetes
     const resPaquetes = await fetch("/obtener-paquetes");
     const paquetes = await resPaquetes.json();
 
@@ -80,14 +72,16 @@ async function cargarCarrito() {
         <hr class="vertical-line" />
         <p><b>Pasajeros:</b> ${paquete.pasajeros}</p>
         <hr class="vertical-line" />
-        <p><b>Precio:</b> $${Number(paquete.precio).toLocaleString("es-AR")}</p>
+        <p class="precio" data-precio="${
+          paquete.precio
+        }"><b>Precio:</b> AR$ ${Number(paquete.precio).toLocaleString(
+        "es-AR"
+      )}</p>
       `;
-
       contenedor.appendChild(div);
-      total += Number(paquete.precio);
     });
 
-    // Obtener autos
+    // Autos
     const resAutos = await fetch("/obtener-autos");
     const autos = await resAutos.json();
 
@@ -103,24 +97,107 @@ async function cargarCarrito() {
         <hr class="vertical-line" />
         <p><b>Plazas:</b> ${auto.plazas}</p>
         <hr class="vertical-line" />
-        <p><b>Precio por día:</b> $${Number(auto.precio_dia).toLocaleString(
-          "es-AR"
-        )}</p>
+        <p class="precio" data-precio="${
+          auto.precio_dia
+        }"><b>Precio por día:</b> AR$ ${Number(auto.precio_dia).toLocaleString(
+        "es-AR"
+      )}</p>
       `;
-
       contenedor.appendChild(div);
-      total += Number(auto.precio_dia);
     });
 
-    document.getElementById("total").textContent =
-      total.toLocaleString("es-AR");
+    // Aplicar moneda seleccionada
+    const monedaGuardada = localStorage.getItem("moneda") || "AR$";
+    actualizarMoneda(monedaGuardada);
+    marcarMonedaSeleccionada(monedaGuardada);
   } catch (error) {
     console.error("Error al cargar carrito:", error);
   }
 }
 
-window.addEventListener("DOMContentLoaded", cargarCarrito);
+// Convertir precios según moneda seleccionada
+function actualizarMoneda(moneda) {
+  const tasas = {
+    AR$: 1,
+    USD: 0.0008403,
+    R$: 0.004671,
+    EU: 0.0007209,
+  };
 
+  const simbolos = {
+    AR$: "AR$",
+    USD: "USD $",
+    R$: "R$",
+    EU: "€",
+  };
+
+  let total = 0;
+
+  document.querySelectorAll(".precio").forEach((p) => {
+    const base = parseFloat(p.dataset.precio);
+    const tasa = tasas[moneda];
+    const simbolo = simbolos[moneda];
+    const esPorDia = p.textContent.includes("por día");
+
+    if (isNaN(base)) return;
+
+    let texto;
+    if (moneda === "AR$") {
+      texto = base.toLocaleString("es-AR");
+      total += base;
+    } else {
+      texto = (base * tasa).toFixed(2);
+      total += parseFloat(texto);
+    }
+
+    p.innerHTML = esPorDia
+      ? `<b>Precio por día:</b> ${simbolo} ${texto}`
+      : `<b>Precio:</b> ${simbolo} ${texto}`;
+  });
+
+  const totalTexto =
+    moneda === "AR$"
+      ? `AR$ ${total.toLocaleString("es-AR")}`
+      : `${simbolos[moneda]} ${total.toFixed(2)}`;
+
+  document.getElementById("total").textContent = totalTexto;
+
+  // Guardar moneda seleccionada
+  localStorage.setItem("moneda", moneda);
+}
+
+// Recalcular total al borrar
+function recalcularTotalSegunMoneda() {
+  const moneda = localStorage.getItem("moneda") || "AR$";
+  actualizarMoneda(moneda);
+}
+
+// Marcar moneda seleccionada visualmente
+function marcarMonedaSeleccionada(moneda) {
+  document
+    .querySelectorAll(".currency-option")
+    .forEach((el) => el.classList.remove("selected"));
+  const activa = document.querySelector(
+    `.currency-option[data-code="${moneda}"]`
+  );
+  if (activa) activa.classList.add("selected");
+}
+
+// Iniciar
+window.addEventListener("DOMContentLoaded", () => {
+  cargarCarrito();
+
+  // Eventos de cambio de moneda
+  document.querySelectorAll(".currency-option").forEach((option) => {
+    option.addEventListener("click", () => {
+      const moneda = option.dataset.code;
+      actualizarMoneda(moneda);
+      marcarMonedaSeleccionada(moneda);
+    });
+  });
+});
+
+// Borrar ítems del carrito
 document.querySelector(".pedidos").addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-borrar")) {
     const itemDiv = e.target.closest(".pedido");
@@ -140,7 +217,7 @@ document.querySelector(".pedidos").addEventListener("click", async (e) => {
       url = "/borrar-auto";
       body = { id_auto: Number(id) };
     } else {
-      alert("Tipo de item desconocido para borrar");
+      alert("Tipo de ítem desconocido para borrar");
       return;
     }
 
@@ -153,23 +230,10 @@ document.querySelector(".pedidos").addEventListener("click", async (e) => {
 
       if (res.ok) {
         itemDiv.remove();
-
-        // 🔁 Recalcular total
-        let total = 0;
-        document.querySelectorAll(".pedido").forEach((div) => {
-          const precioText = div.querySelector("p:last-of-type").textContent;
-          const precio = precioText
-            .replace(/[^\d,.-]/g, "")
-            .replace(/\./g, "")
-            .replace(",", ".");
-          total += parseFloat(precio);
-        });
-
-        document.getElementById("total").textContent =
-          total.toLocaleString("es-AR");
+        recalcularTotalSegunMoneda();
       } else {
         const errorText = await res.text();
-        alert("Error al eliminar el item: " + errorText);
+        alert("Error al eliminar el ítem: " + errorText);
       }
     } catch (err) {
       console.error("Error en la conexión:", err);
