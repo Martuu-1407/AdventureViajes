@@ -241,3 +241,49 @@ document.querySelector(".pedidos").addEventListener("click", async (e) => {
     }
   }
 });
+
+document
+  .getElementById("enviarPedidoBtn")
+  .addEventListener("click", async () => {
+    console.log("Botón 'Enviar pedido' fue presionado");
+    try {
+      // 1. Obtener email del usuario
+      const resUsuario = await fetch("/obtener-nombre", {
+        credentials: "include",
+      });
+      if (!resUsuario.ok) {
+        alert("Debes iniciar sesión para enviar el pedido.");
+        return;
+      }
+      const dataUsuario = await resUsuario.json();
+      const email = dataUsuario.nombre; // OJO: si el endpoint devuelve `email`, usá `dataUsuario.email`
+
+      // 2. Obtener total desde el DOM
+      const totalTexto = document.getElementById("total").textContent;
+      // Aquí tomamos el total tal cual, sin convertirlo ni tocarlo
+      const soloTexto = totalTexto.replace(/^[^\d]+/, ""); // quita moneda, ej "AR$ 2.390.000" -> "2.390.000"
+
+      // 3. Enviar a /enviar-pedido
+      const res = await fetch("/enviar-pedido", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, total: soloTexto }), // enviamos texto literal
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        alert("Error al enviar el pedido: " + errorText);
+        return;
+      }
+
+      const resultado = await res.json();
+      alert("Pedido enviado correctamente. ID: " + resultado.id_pedido);
+
+      // 4. Recargar carrito para reflejar que se vació
+      cargarCarrito();
+      document.getElementById("total").textContent = "AR$ 0";
+    } catch (err) {
+      console.error("Error al enviar pedido:", err);
+      alert("Error inesperado al enviar pedido.");
+    }
+  });

@@ -1,3 +1,13 @@
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "tolosamartintecnica@gmail.com",
+    pass: "vsrdlnshtzbztfdv", // sin espacios
+  },
+});
+
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -14,6 +24,40 @@ const mimeTypes = {
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon",
 };
+
+// Función para insertar pedido
+function agregarPedido(email, total, callback) {
+  const sql = "INSERT INTO pedidos (email, total) VALUES (?, ?)";
+  conexion.query(sql, [email, total], (err, resultado) => {
+    if (err) return callback(err);
+    callback(null, resultado.insertId);
+  });
+}
+
+// Función para borrar carrito del usuario
+function borrarCarritoUsuario(email, callback) {
+  const sqlVuelos = "DELETE FROM carrito_vuelos WHERE email_usuario = ?";
+  const sqlAutos = "DELETE FROM carrito_autos WHERE email_usuario = ?";
+  const sqlPaquetes = "DELETE FROM carrito_paquetes WHERE email_usuario = ?";
+
+  conexion.query(sqlVuelos, [email], (err) => {
+    if (err) return callback(err);
+    conexion.query(sqlAutos, [email], (err) => {
+      if (err) return callback(err);
+      conexion.query(sqlPaquetes, [email], (err) => {
+        if (err) return callback(err);
+        callback(null);
+      });
+    });
+  });
+}
+
+function parseTotalStrToFloat(str) {
+  if (typeof str !== "string") return NaN;
+  // Eliminar puntos de miles y cambiar coma decimal por punto
+  const limpio = str.replace(/\./g, "").replace(/,/g, ".");
+  return parseFloat(limpio);
+}
 
 const server = http.createServer((req, res) => {
   if (req.method === "POST" && req.url === "/registrar") {
@@ -101,7 +145,7 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    const sql = "SELECT nombre FROM usuarios WHERE email = ?";
+    const sql = "SELECT nombre, email FROM usuarios WHERE email = ?";
     conexion.query(sql, [email], (err, resultados) => {
       if (err || resultados.length === 0) {
         res.writeHead(404, { "Content-Type": "text/plain" });
@@ -339,6 +383,156 @@ const server = http.createServer((req, res) => {
         console.error("Error al parsear JSON:", e);
         res.writeHead(400);
         res.end("Error en el cuerpo de la solicitud");
+      }
+    });
+  } else if (req.method === "POST" && req.url === "/enviar-pedido") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try {
+        console.log("🟡 Body recibido:", body);
+        const datos = JSON.parse(body);
+
+        // Obtener email desde cookie
+        const cookie = req.headers.cookie;
+        const email = cookie?.split("usuario_email=")[1]?.split(";")[0];
+
+        const total = datos.total; // total viene como texto formateado, ej: "2.390.000"
+
+        console.log("🟢 Email:", email);
+        console.log("🟢 Total (texto):", total);
+
+        if (!email || !total || typeof total !== "string") {
+          console.log("🔴 Datos inválidos");
+          res.writeHead(400, { "Content-Type": "text/plain" });
+          res.end("Datos incompletos o incorrectos");
+          return;
+        }
+
+        const sql = "INSERT INTO pedidos (email, total) VALUES (?, ?)";
+        conexion.query(sql, [email, total], (err, resultado) => {
+          if (err) {
+            console.error("🔴 Error al insertar pedido:", err);
+            res.writeHead(500, { "Content-Type": "text/plain" });
+            res.end("Error al guardar el pedido");
+            return;
+          }
+
+          console.log("✅ Pedido insertado con ID:", resultado.insertId);
+
+          // Aquí borrás el carrito del usuario (como ya tenés)
+          borrarCarritoUsuario(email, (errBorrar) => {
+            if (errBorrar) {
+              console.error("🔴 Error al borrar carrito:", errBorrar);
+              res.writeHead(500);
+              res.end("Error al borrar carrito");
+              return;
+            }
+
+            console.log("🧹 Carrito borrado con éxito");
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({
+                mensaje: "Pedido guardado",
+                id_pedido: resultado.insertId,
+              })
+            );
+          });
+        });
+      } catch (e) {
+        console.error("🔴 Error al parsear JSON:", e);
+        res.writeHead(400, { "Content-Type": "text/plain" });
+        res.end("JSON inválido");
+      }
+    });
+  } else if (req.method === "GET" && req.url === "/obtener-pedidos") {
+    const sql = "SELECT * FROM pedidos ORDER BY id_pedido DESC"; // Si no tenés fecha, usa id_pedido
+    conexion.query(sql, (err, resultados) => {
+      if (err) {
+        console.error("Error en /obtener-pedidos:", err);
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end("Error al obtener pedidos");
+        return;
+      }
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(resultados));
+    });
+  } else if (req.method === "POST" && req.url === "/cambiar-estado-pedido") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+    req.on("end", () => {
+      try {
+        const { id_pedido, estado } = JSON.parse(body);
+
+        if (
+          !id_pedido ||
+          !estado ||
+          !["pendiente", "aceptado", "rechazado"].includes(estado)
+        ) {
+          res.writeHead(400, { "Content-Type": "text/plain" });
+          res.end("Datos inválidos");
+          return;
+        }
+
+        const sqlUpdate = "UPDATE pedidos SET estado = ? WHERE id_pedido = ?";
+        conexion.query(sqlUpdate, [estado, id_pedido], (err, resultado) => {
+          if (err) {
+            res.writeHead(500, { "Content-Type": "text/plain" });
+            res.end("Error al actualizar estado");
+            return;
+          }
+
+          if (resultado.affectedRows === 0) {
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            res.end("Pedido no encontrado");
+            return;
+          }
+
+          // Obtener el email directamente desde el pedido
+          const sqlEmailPedido =
+            "SELECT email FROM pedidos WHERE id_pedido = ?";
+          conexion.query(sqlEmailPedido, [id_pedido], (err, resultados) => {
+            if (err || resultados.length === 0) {
+              res.writeHead(500, { "Content-Type": "text/plain" });
+              res.end("No se encontró el email del pedido");
+              return;
+            }
+
+            const email = resultados[0].email;
+            console.log("📩 Email del pedido:", email);
+
+            const asunto = "Estado de tu pedido";
+            const mensaje =
+              estado === "aceptado"
+                ? "Tu pedido ha sido aceptado. ¡Gracias por confiar en nosotros!"
+                : "Tu pedido ha sido rechazado. Si tenés dudas, contactanos.";
+
+            transporter.sendMail(
+              {
+                from: "tolosamartintecnica@gmail.com", // correo emisor
+                to: email,
+                subject: asunto,
+                text: mensaje,
+              },
+              (err, info) => {
+                if (err) {
+                  console.error("Error al enviar email:", err);
+                } else {
+                  console.log("Correo enviado:", info.response);
+                }
+
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ mensaje: "Estado actualizado" }));
+              }
+            );
+          });
+        });
+      } catch {
+        res.writeHead(400, { "Content-Type": "text/plain" });
+        res.end("JSON inválido");
       }
     });
   } else {
