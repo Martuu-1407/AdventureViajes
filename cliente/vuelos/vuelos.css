@@ -1302,6 +1302,15 @@ footer {
     background-color: var(--hover-amarillo);
     border-radius: 8px;
   }
+  .coin .coin-1 .coin-2 .coin-3{
+    display: none;
+  }
+  .piggy-bank{
+    display: none;
+  }
+  .piggy-bank-icon{
+    display: none;
+  }
 }
 
 /* algunos celus pequeños (hasta 480px) */

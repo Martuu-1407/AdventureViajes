@@ -1226,162 +1226,687 @@ footer {
 
 
 /* Tablets y compu(768px - 1024px) */
+/* RESPONSIVE STYLES FOR MAIN CONTENT */
+
+/* Hero Section Responsive */
 @media (max-width: 1024px) {
     .header-content {
         height: 90px;
-    }
+      }
     
-    .logo-image {
+      .logo-image {
         width: 90px;
         height: 87px;
-    }
+      }
+      .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
     
-    .nav-compu {
+      .nav-compu {
         gap: 10px;
-    }
+      }
     
-    .btn-nav span {
+      .btn-nav span {
         display: none;
-    }
+      }
     
-    .btn-nav {
+      .btn-nav {
         padding: 8px;
+      }
+    .destino {
+      height: 350px;
     }
-}
-
-/* Tablets y celu*/
-@media (max-width: 768px) {
+    
+    .destino-info h1 {
+      font-size: 40px;
+    }
+    
+    .destino-subtitle {
+      font-size: 16px;
+    }
+    
+    .precio-highlight .precio {
+      font-size: 28px;
+    }
+  }
+  
+  @media (max-width: 768px) {
     .header-content {
-        height: 80px;
-        padding: 0 15px;
-    }
-    
-    .logo-image {
-        width: 80px;
-        height: 77px;
-    }
-    
-    .menu {
+    height: 60px;
+  }
+
+  .logo-image {
+    width: 70px;
+    height: 67px;
+  }
+
+  .compu-user {
+    gap: 6px;
+  }
+
+  .moneda {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+    .mobile-menu-btn {
         display: flex;
-    }
+      }
     
-    .nav-compu {
-        display: none;
-    }
-    
-    .compu-user {
-        gap: 12px;
-    }
-    
-    .user-item span {
-        display: none;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 30px;
-    }
-    
-    .footer-section {
-        min-width: 100%;
-    }
-    
-    .footer-title {
-        font-size: 1.3rem;
-    }
-
-    .user-item {
+      .nav-desktop,
+      .user-section-desktop {
         display: none;
       }
     
-      .user-item-movil {
-        display: flex;
-        margin: 20px;
+      .mobile-menu {
+        top: 70px;
       }
-      .user-item-movil:hover {
-        color: var(--txt);
-        background-color: var(--hover-amarillo);
-        transform: translateY(-2px);
-        border-radius: 10px;
-      }
-    
-      .user-item-movil-dropdown {
-        position: absolute;
-        top: 50px; /* Ajustá según la altura del header */
-        right: 0px;
-        background-color: var(--header-color);
-        border-radius: 8px;
-        display: none;
-        flex-direction: column;
-        height: 50px;
-        width: 200px;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-      }
-    
-      .user-item-movil-dropdown a {
-        padding: 12px 16px;
-        text-decoration: none;
-        color: #333;
-        font-weight: 500;
-        transition: background 0.2s;
-      }
-    
-      .user-item-movil-dropdown a:hover {
-        background-color: var(--hover-amarillo);
-        border-radius: 8px;
-      }
-}
-
-/* celu (hasta 600px) */
-@media (max-width: 600px) {
-    .header-content {
-        height: 70px;
+    .destino {
+      height: 300px;
     }
     
-    .logo-image {
-        width: 70px;
-        height: 67px;
+    .destino-info {
+      padding: 0 15px;
     }
     
-    .compu-user {
-        gap: 8px;
+    .destino-info h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
     }
     
-    .moneda {
-        padding: 4px 8px;
-        font-size: 12px;
+    .destino-subtitle {
+      font-size: 14px;
+      margin-bottom: 24px;
     }
     
-    .user-item {
-        padding: 6px;
+    .breadcrumb {
+      font-size: 12px;
+      margin-bottom: 12px;
     }
-}
-
-
-
-/* algunos celus pequeños (hasta 480px) */
-@media (max-width: 400px) {
+    
+    .precio-highlight {
+      padding: 12px 24px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    
+    .precio-highlight .precio {
+      font-size: 24px;
+    }
+    
+    .precio-highlight .from,
+    .precio-highlight .trip-type {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
     .header-content {
         height: 60px;
-        padding: 0 10px;
+      }
+    
+      .logo-image {
+        width: 70px;
+        height: 67px;
+      }
+    
+      .compu-user {
+        gap: 6px;
+      }
+    
+      .moneda {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+    
+    .destino {
+      height: 250px;
     }
     
-    .logo-image {
-        width: 60px;
-        height: 57px;
+    .destino-info h1 {
+      font-size: 24px;
+      line-height: 1.2;
     }
-
-     footer {
+    
+    .precio-highlight {
+      padding: 10px 20px;
+    }
+    
+    .precio-highlight .precio {
+      font-size: 20px;
+    }
+  }
+  
+  /* Price Analysis Section Responsive */
+  @media (max-width: 1024px) {
+    .analisis-precio {
+      padding: 48px 0;
+    }
+    
+    .analisis-grid {
+      gap: 32px;
+    }
+    
+    .seccion-header h2 {
+      font-size: 24px;
+    }
+    
+    .cuadro {
+      padding: 24px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .analisis-precio {
+      padding: 32px 0;
+    }
+    
+    .analisis-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    
+    .seccion-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    
+    .seccion-header h2 {
+      font-size: 22px;
+    }
+    
+    .seccion-header p {
+      font-size: 14px;
+    }
+    
+    .cuadro {
+      padding: 20px;
+    }
+    
+    .cuadro-txt {
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    
+    .item-txt {
+      font-size: 12px;
+    }
+    
+    /* Chart responsive adjustments */
+    .chart-wrapper {
+      height: 250px;
+    }
+    
+    .chart-y-axis {
+      width: 50px;
+    }
+    
+    .y-label {
+      font-size: 10px;
+    }
+    
+    .month-label {
+      font-size: 11px;
+    }
+    
+    .bar {
+      width: 14px;
+    }
+    
+    .bar-container {
+      max-width: 30px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .cuadro-txt {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .chart-wrapper {
+      height: 200px;
+      gap: 8px;
+    }
+    
+    .chart-y-axis {
+      width: 40px;
+    }
+    
+    .y-label {
+      font-size: 9px;
+    }
+    
+    .month-label {
+      font-size: 10px;
+    }
+    
+    .bar {
+      width: 12px;
+    }
+    
+    .chart-bars {
+      gap: 4px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header-content {
+        height: 45px;
+        padding: 0 1px;
+      }
+    
+      .logo-image {
+        width: 45px;
+        height: 40px;
+        left: 1;
+      }
+    
+      footer {
         padding: 30px 0;
-    }
+      }
     
-    .footer-title {
+      .footer-title {
         font-size: 1.2rem;
         margin-bottom: 15px;
+      }
+    
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+    
+    .chart-wrapper {
+      height: 180px;
     }
     
-    .footer-links li {
-        margin-bottom: 8px;
+    .chart-title {
+      font-size: 14px;
+      margin-bottom: 20px;
     }
-}
+    
+    .month-label {
+      font-size: 9px;
+    }
+    
+    .bar {
+      width: 10px;
+    }
+    
+    .chart-bars {
+      gap: 2px;
+    }
+  }
+  
+  /* Savings Section Responsive */
+  @media (max-width: 768px) {
+    .seccion-ahorro {
+      gap: 20px;
+    }
+    
+    .carta-ahorro {
+      padding: 24px;
+    }
+    
+    .carta-ahorro h3 {
+      font-size: 20px;
+    }
+    
+    .ahorro-subtitulo {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .descripcion-ahorro {
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .mejor-tiempo {
+      padding: 20px;
+    }
+    
+    .mejor-tiempo h4 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .epoca-item {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+    
+    .epoca-item .mes {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header-content {
+        height: 45px;
+        padding: 0 1px;
+      }
+    
+      .logo-image {
+        width: 45px;
+        height: 40px;
+        left: 1;
+      }
+    
+      footer {
+        padding: 30px 0;
+      }
+    
+      .footer-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+    
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+    .carta-ahorro {
+      padding: 20px;
+    }
+    
+    .carta-ahorro h3 {
+      font-size: 18px;
+    }
+    
+    .mejor-tiempo {
+      padding: 16px;
+    }
+    
+    .epoca-grid {
+      gap: 8px;
+    }
+    
+    .epoca-item {
+      padding: 8px 10px;
+      font-size: 11px;
+    }
+  }
+  
+  /* Flight Options Section Responsive */
+  @media (max-width: 1024px) {
+    .flight-options {
+      padding: 48px 0;
+    }
+    
+    .flight-info {
+      grid-template-columns: 180px 1fr 180px;
+      gap: 24px;
+    }
+    
+    .flight-card {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .flight-options {
+      padding: 32px 0;
+    }
+    
+    .section-header h2 {
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .flights-list {
+      gap: 12px;
+    }
+    
+    .flight-card {
+      padding: 16px;
+    }
+    
+    .flight-info {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      text-align: center;
+    }
+    
+    .airline-info {
+      justify-content: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    
+    .airline-logo {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .airline-name {
+      font-size: 14px;
+    }
+    
+    .flight-time {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .flight-duration {
+      order: -1;
+      padding: 0;
+    }
+    
+    .duration-line {
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    
+    .duration-text {
+      font-size: 12px;
+    }
+    
+    .stops {
+      font-size: 11px;
+    }
+    
+    .departure .time,
+    .arrival .time {
+      font-size: 18px;
+    }
+    
+    .departure .airport,
+    .arrival .airport {
+      font-size: 12px;
+    }
+    
+    .flight-price {
+      text-align: center;
+      padding-top: 12px;
+      border-top: 1px solid #f3f4f6;
+    }
+    
+    .price-amount {
+      font-size: 20px;
+    }
+    
+    .price-per-person {
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+    
+    .select-flight-btn {
+      padding: 10px 20px;
+      font-size: 12px;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .header-content {
+        height: 45px;
+        padding: 0 1px;
+      }
+    
+      .logo-image {
+        width: 45px;
+        height: 40px;
+        left: 1;
+      }
+    
+      footer {
+        padding: 30px 0;
+      }
+    
+      .footer-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+    
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+    .flight-time {
+      gap: 12px;
+    }
+    
+    .departure,
+    .arrival {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+    
+    .departure .time,
+    .arrival .time {
+      font-size: 16px;
+    }
+    
+    .departure .airport,
+    .arrival .airport {
+      font-size: 11px;
+      margin-top: 0;
+    }
+    
+    .duration-line {
+      margin-bottom: 2px;
+    }
+    
+    .duration-text {
+      font-size: 11px;
+    }
+    
+    .price-amount {
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header-content {
+        height: 45px;
+        padding: 0 1px;
+      }
+    
+      .logo-image {
+        width: 45px;
+        height: 40px;
+        left: 1;
+      }
+    
+      footer {
+        padding: 30px 0;
+      }
+    
+      .footer-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+    
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+    .flight-card {
+      padding: 12px;
+    }
+    
+    .airline-info {
+      gap: 8px;
+    }
+    
+    .airline-logo {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .airline-name {
+      font-size: 13px;
+    }
+    
+    .departure,
+    .arrival {
+      padding: 6px 10px;
+    }
+    
+    .departure .time,
+    .arrival .time {
+      font-size: 14px;
+    }
+    
+    .departure .airport,
+    .arrival .airport {
+      font-size: 10px;
+    }
+    
+    .duration-text {
+      font-size: 10px;
+    }
+    
+    .stops {
+      font-size: 10px;
+    }
+    
+    .price-amount {
+      font-size: 16px;
+    }
+    
+    .select-flight-btn {
+      padding: 8px 16px;
+      font-size: 11px;
+    }
+  }
+  
+  /* Container responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 10px;
+    }
+  }
+  
+  /* Additional responsive utilities */
+  @media (max-width: 768px) {
+    .hide-mobile {
+      display: none !important;
+    }
+    
+    .show-mobile {
+      display: block !important;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .hide-desktop {
+      display: none !important;
+    }
+    
+    .show-desktop {
+      display: block !important;
+    }
+  }

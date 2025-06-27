@@ -78,7 +78,7 @@ body {
   border-radius: 8px;
   display: none;
   flex-direction: column;
-  height: 50px;
+  height: 100px;
   width: 200px;
   z-index: 1000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -285,7 +285,7 @@ body {
 .vertical-line {
   border: none;
   border-left: 2px solid #999;
-  height: 90px;
+  height: 80px;
   margin: 0 20px;
 }
 
@@ -681,6 +681,10 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .vertical-line{
+    display: none;
+  }
+
   .header-content {
     height: 70px;
   }
