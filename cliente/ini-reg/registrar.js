@@ -50,7 +50,9 @@ if (formLogin) {
 
       if (response.ok) {
         alert("Inicio de sesión exitoso");
-        window.location.href = "../vuelos/vuelos.html"; // o dashboard
+        const resultado = await response.json();
+        window.location.href = resultado.redirect; // 🔁 Redirecciona según lo que devuelva el servidor
+        // window.location.href = "../vuelos/vuelos.html"; // o dashboard
       } else if (response.status === 401) {
         alert("Credenciales incorrectas");
       } else {

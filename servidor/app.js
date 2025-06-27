@@ -55,6 +55,17 @@ const server = http.createServer((req, res) => {
       const email = datos.email;
       const contrasena = datos.contrasena;
 
+      // 🔒 Si es el admin, devolvemos JSON con redirección
+      if (email === "admin@gmail.com" && contrasena === "123123") {
+        res.writeHead(200, {
+          "Set-Cookie": `usuario_email=${email}; HttpOnly`,
+          "Content-Type": "application/json",
+        });
+        res.end(JSON.stringify({ redirect: "/adminn/admin.html" }));
+        return;
+      }
+
+      // 🔍 Si no es admin, consultamos en la base de datos
       const sql = "SELECT * FROM usuarios WHERE email = ? AND contrasena = ?";
       conexion.query(sql, [email, contrasena], (err, resultados) => {
         if (err) {
@@ -63,24 +74,23 @@ const server = http.createServer((req, res) => {
           res.end("Error interno del servidor");
           return;
         }
+
         if (resultados.length > 0) {
           console.log("Inicio de sesión exitoso para:", email);
-          // 🔴 Guardamos el email como cookie y redirigimos
-          res.writeHead(302, {
+          res.writeHead(200, {
             "Set-Cookie": `usuario_email=${email}; HttpOnly`,
-            Location: "/ini-reg/sesion.html",
+            "Content-Type": "application/json",
           });
-          res.end();
-          return;
+          res.end(JSON.stringify({ redirect: "/vuelos/vuelos.html" }));
         } else {
           console.log("Credenciales inválidas");
           res.writeHead(401, { "Content-Type": "text/plain" });
           res.end("Credenciales incorrectas");
-          return;
         }
       });
     });
-    return; // <--- También retorna aquí para que no siga a servir archivos estáticos
+
+    return;
   } else if (req.method === "GET" && req.url === "/obtener-nombre") {
     const cookie = req.headers.cookie;
     const email = cookie?.split("usuario_email=")[1]?.split(";")[0];

@@ -103,14 +103,20 @@ body {
   transition: background 0.2s;
 }
 
-.acept{
+.acept {
   background-color: green;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
   border: none;
   border-radius: 100px;
 }
 
-.acept{
+.recha {
   background-color: red;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
   border: none;
   border-radius: 100px;
 }
@@ -212,16 +218,22 @@ h1 {
   padding: 0 1rem;
 }
 
+.pedidosAdmin {
+  padding: 20px;
+}
+
 .pedido {
   background-color: var(--fondos);
   padding: 20px;
   margin: 10px auto;
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   align-items: center;
   border-radius: 10px;
   display: flex;
   gap: 1rem;
+  justify-content: space-between;
+  box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.3);
 }
 
 .pedido h3 {
@@ -485,12 +497,12 @@ h1 {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .cupones {
     max-width: 100%;
     margin: 0;
   }
-  
+
   .total {
     max-width: 100%;
     width: 100%;
@@ -501,67 +513,67 @@ h1 {
   .menu {
     display: block;
   }
-  
+
   .nav-compu {
     display: none;
   }
-  
+
   .compu-user {
     gap: 0.5rem;
   }
-  
+
   .user-item span {
     display: none;
   }
-  
+
   h1 {
     font-size: 1.5rem;
     margin: 1rem 0;
   }
-  
+
   .pedido {
     flex-direction: column;
     text-align: center;
     padding: 15px;
   }
-  
+
   .pedido img {
     width: 100px;
     height: 100px;
     object-fit: cover;
   }
-  
+
   .vertical-line {
     display: none;
   }
-  
+
   .abajo {
     padding: 0 0.5rem;
     gap: 1rem;
   }
-  
+
   .cupones {
     min-width: auto;
   }
-  
+
   .ingresar {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .ingresar input {
     width: 100%;
     min-width: auto;
   }
-  
+
   .aplicar {
     width: 100%;
   }
-  
+
   .total {
     min-width: auto;
   }
-  
+
   .currency-menu {
     right: 0;
     left: auto;
@@ -573,56 +585,56 @@ h1 {
   .container {
     padding: 0 0.5rem;
   }
-  
+
   .header-content {
     gap: 0.5rem;
   }
-  
+
   .logo-image {
     height: 30px;
   }
-  
+
   .pedidos {
     padding: 0 0.5rem;
   }
-  
+
   .pedido {
     margin: 10px 0;
     padding: 10px;
   }
-  
+
   .pedido h3 {
     font-size: 1rem;
   }
-  
+
   .pedido img {
     width: 80px;
     height: 80px;
   }
-  
+
   .cupones h2,
   .total h2 {
     font-size: 1.25rem;
   }
-  
+
   .total {
     padding: 15px;
   }
-  
+
   .currency-btn {
     padding: 6px 10px;
     font-size: 12px;
   }
-  
+
   .currency-menu {
     min-width: 180px;
   }
-  
+
   .footer-content {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .footer-container {
     padding: 2rem 0.5rem 1rem;
   }
@@ -632,34 +644,34 @@ h1 {
   h1 {
     font-size: 1.25rem;
   }
-  
+
   .pedido {
     padding: 8px;
   }
-  
+
   .pedido h3 {
     font-size: 0.9rem;
   }
-  
+
   .pedido p {
     font-size: 0.8rem;
   }
-  
+
   .pedido img {
     width: 60px;
     height: 60px;
   }
-  
+
   .total,
   .cupones {
     padding: 10px;
   }
-  
+
   .ingresar input {
     padding: 8px;
     font-size: 14px;
   }
-  
+
   .aplicar,
   .finalizar {
     padding: 8px 16px;
