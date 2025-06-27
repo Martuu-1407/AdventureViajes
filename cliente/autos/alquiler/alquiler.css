@@ -660,7 +660,7 @@ footer {
   }
 
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
     gap: 16px;
   }
 
@@ -682,6 +682,10 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .vertical-line{
+    display: none;
+  }
+
   .header-content {
     height: 70px;
   }

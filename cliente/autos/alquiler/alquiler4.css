@@ -681,6 +681,10 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .vertical-line{
+    display: none;
+  }
+  
   .header-content {
     height: 70px;
   }
