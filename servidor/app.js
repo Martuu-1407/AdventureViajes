@@ -35,16 +35,16 @@ function agregarPedido(email, total, callback) {
 }
 
 // Función para borrar carrito del usuario
-function borrarCarritoUsuario(email, callback) {
-  const sqlVuelos = "DELETE FROM carrito_vuelos WHERE email_usuario = ?";
-  const sqlAutos = "DELETE FROM carrito_autos WHERE email_usuario = ?";
-  const sqlPaquetes = "DELETE FROM carrito_paquetes WHERE email_usuario = ?";
+function borrarTodoElCarrito(callback) {
+  const sqlVuelos = "DELETE FROM vuelos";
+  const sqlAutos = "DELETE FROM autos";
+  const sqlPaquetes = "DELETE FROM paquetes";
 
-  conexion.query(sqlVuelos, [email], (err) => {
+  conexion.query(sqlVuelos, (err) => {
     if (err) return callback(err);
-    conexion.query(sqlAutos, [email], (err) => {
+    conexion.query(sqlAutos, (err) => {
       if (err) return callback(err);
-      conexion.query(sqlPaquetes, [email], (err) => {
+      conexion.query(sqlPaquetes, (err) => {
         if (err) return callback(err);
         callback(null);
       });
@@ -387,23 +387,26 @@ const server = http.createServer((req, res) => {
     });
   } else if (req.method === "POST" && req.url === "/enviar-pedido") {
     let body = "";
-    req.on("data", (chunk) => (body += chunk));
+
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+
     req.on("end", () => {
       try {
-        console.log("🟡 Body recibido:", body);
         const datos = JSON.parse(body);
 
-        // Obtener email desde cookie
+        // Obtener email desde la cookie
         const cookie = req.headers.cookie;
         const email = cookie?.split("usuario_email=")[1]?.split(";")[0];
 
-        const total = datos.total; // total viene como texto formateado, ej: "2.390.000"
+        const totalTexto = datos.total;
+        const total = parseTotalStrToFloat(totalTexto);
 
         console.log("🟢 Email:", email);
-        console.log("🟢 Total (texto):", total);
+        console.log("🟢 Total (convertido):", total);
 
-        if (!email || !total || typeof total !== "string") {
-          console.log("🔴 Datos inválidos");
+        if (!email || isNaN(total)) {
           res.writeHead(400, { "Content-Type": "text/plain" });
           res.end("Datos incompletos o incorrectos");
           return;
@@ -420,8 +423,8 @@ const server = http.createServer((req, res) => {
 
           console.log("✅ Pedido insertado con ID:", resultado.insertId);
 
-          // Aquí borrás el carrito del usuario (como ya tenés)
-          borrarCarritoUsuario(email, (errBorrar) => {
+          // Borrar TODO el carrito
+          borrarTodoElCarrito((errBorrar) => {
             if (errBorrar) {
               console.error("🔴 Error al borrar carrito:", errBorrar);
               res.writeHead(500);
