@@ -52,7 +52,21 @@ async function cargarPedidosAdmin() {
       contenedor.appendChild(divPedido);
     });
 
-    // Eventos para botones acept/rechaz ...
+    // Agregar event listeners a botones aceptar
+    document.querySelectorAll(".acept").forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const idPedido = boton.getAttribute("data-id");
+        cambiarEstadoPedido(idPedido, "aceptado"); // o el estado que quieras poner
+      });
+    });
+
+    // Agregar event listeners a botones rechazar
+    document.querySelectorAll(".recha").forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const idPedido = boton.getAttribute("data-id");
+        cambiarEstadoPedido(idPedido, "rechazado"); // o el estado que quieras poner
+      });
+    });
   } catch (error) {
     console.error(error);
     contenedor.innerHTML = "<p>Error al cargar pedidos.</p>";
